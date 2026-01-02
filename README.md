@@ -147,13 +147,14 @@ Extensions add domain-specific files (see above).
 | Project | Extension | Description |
 |---------|-----------|-------------|
 | [uno-ea](https://github.com/marekgorski/uno-ea) | ea | 90-day onboarding tracker |
-| *(your project)* | pa | Trip planning, events |
+| [australia-trip](https://github.com/marekgorski/australia-trip) | pa | Family trip planning Feb-Mar 2026 |
 | [admin](https://github.com/marekgorski/admin) | km | KayGee operations |
 
 ---
 
 ## Changelog
 
+- **v2.0** (Jan 2, 2026): uno/pa validated with australia-trip implementation, refined NOTES.md template with research tables
 - **v2.0** (Jan 1, 2026): Rebranded to uno, added extension system (ea, pa, km), extension-aware `..start`
 - **v1.2** (Dec 28, 2025): Task ownership markers, handoff system
 - **v1.1** (Dec 28, 2025): Acceptance criteria, verification
@@ -167,4 +168,4 @@ MIT — Use freely, modify as needed.
 
 ---
 
-*protocol-uno v2.0 — January 1, 2026*
+*protocol-uno v2.0 — January 2, 2026*

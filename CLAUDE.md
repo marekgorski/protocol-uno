@@ -489,7 +489,16 @@ Research, ideas, and preferences.
 ## Research
 
 ### [Location/Topic]
-- [Notes]
+
+**Context:** [What you need to know, constraints]
+
+**Options:**
+
+| Option | Location | Notes | Est. Price |
+|--------|----------|-------|------------|
+| **[Name]** | [Where] | [Key details] | [Price] |
+
+**Recommendation:** [Best option and why]
 
 ---
 
@@ -679,4 +688,4 @@ Document tool-specific quirks and workarounds here.
 
 ---
 
-*protocol-uno v2.0 — January 1, 2026*
+*protocol-uno v2.0 — January 2, 2026*
