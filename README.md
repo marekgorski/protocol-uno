@@ -2,7 +2,7 @@
 
 A template for AI-assisted delegation — AI works FOR you.
 
-Part of the [KayGee Protocol Family](https://github.com/marekgorski/layer3-protocol).
+Part of the [KayGee Protocol Family](https://github.com/marekgorski/admin/tree/main/protocol).
 
 ---
 
@@ -18,7 +18,7 @@ AI works FOR you        AI works WITH you       AI works AMONG systems
 
 **uno** is for clear delegation: you define WHAT, AI handles HOW.
 
-Use [duo (layer3-protocol)](https://github.com/marekgorski/layer3-protocol) for code projects needing architect/builder separation.
+Use **duo** (duo-template) for code projects needing architect/builder separation.
 
 ---
 
@@ -39,13 +39,19 @@ Extension is selected during onboarding — Claude will ask which fits your proj
 
 ## Quick Start
 
-### 1. Clone this template
+### 1. Use this template
+
+**GitHub Template:** Click "Use this template" on GitHub to create a new repo.
+
+Or clone directly:
 
 ```bash
 git clone https://github.com/marekgorski/light-protocol.git my-project
 cd my-project
 rm -rf .git && git init
 ```
+
+*Note: Repo will be renamed to `uno-template` — clone URL will update accordingly.*
 
 ### 2. Open in Claude
 
@@ -161,4 +167,4 @@ MIT — Use freely, modify as needed.
 
 ---
 
-*uno v2.0 — January 1, 2026*
+*protocol-uno v2.0 — January 1, 2026*

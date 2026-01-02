@@ -93,13 +93,13 @@ git add -A && git commit -m "Initialize project: [PROJECT_NAME]" && git push
 
 ---
 
-## uno Protocol (v2.0)
+## protocol-uno v2.0
 
 This project uses the **uno** (Delegate) protocol — AI works FOR you.
 
 **uno = Delegate:** You define WHAT, AI handles HOW.
 
-> Protocol source: [KayGee Protocol Family](https://github.com/marekgorski/layer3-protocol)
+> Protocol source: [KayGee Protocol Family](https://github.com/marekgorski/admin/tree/main/protocol)
 
 ### Task Ownership Markers
 
@@ -679,4 +679,4 @@ Document tool-specific quirks and workarounds here.
 
 ---
 
-*uno v2.0 — January 1, 2026*
+*protocol-uno v2.0 — January 1, 2026*
