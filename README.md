@@ -101,6 +101,28 @@ Extensions add domain-specific files (see above).
 
 ---
 
+## Philosophy
+
+### Why Files Work
+
+AI forgets everything between conversations. Start a new chat, and it's meeting you for the first time.
+
+But files don't forget.
+
+When you write what you learned in a file, AI reads it next session. When you track what's done, AI knows where you left off. When you log what needs a human, AI doesn't spin on work it can't complete.
+
+**Your markdown files ARE the AI's memory:**
+
+| File | What It Remembers |
+|------|-------------------|
+| TODO.md | What needs doing (with clear "done" criteria) |
+| PROGRESS.md | What happened (so the next session knows) |
+| MAREK.md | What only you can do (so AI doesn't waste time) |
+
+Three files. That's all you need for persistent delegation.
+
+---
+
 ## Key Rules
 
 1. **AC is required** — Every TODO needs acceptance criteria
