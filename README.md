@@ -18,7 +18,7 @@ AI works FOR you        AI works WITH you       AI works AMONG systems
 
 **uno** is for clear delegation: you define WHAT, AI handles HOW.
 
-Use **duo** (duo-template) for code projects needing architect/builder separation.
+Use **duo** ([protocol-duo](https://github.com/marekgorski/protocol-duo)) for code projects needing architect/builder separation.
 
 ---
 
@@ -46,12 +46,10 @@ Extension is selected during onboarding — Claude will ask which fits your proj
 Or clone directly:
 
 ```bash
-git clone https://github.com/marekgorski/light-protocol.git my-project
+git clone https://github.com/marekgorski/protocol-uno.git my-project
 cd my-project
 rm -rf .git && git init
 ```
-
-*Note: Repo will be renamed to `uno-template` — clone URL will update accordingly.*
 
 ### 2. Open in Claude
 
