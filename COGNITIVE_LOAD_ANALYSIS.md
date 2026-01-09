@@ -16,6 +16,77 @@
 
 ---
 
+## How uno Fits in the Protocol Family
+
+### The KayGee Philosophy: "Files Don't Forget"
+
+> "AI forgets everything between conversations. Start a new chat, and it's meeting you for the first time. But files don't forget."
+
+The protocol family (uno/duo/tre) shares this core principle: **markdown files ARE the AI's memory.**
+
+### Three Modes of AI Collaboration
+
+```
+uno (Delegate)          duo (Collaborate)       tre (Automate)
+AI works FOR you        AI works WITH you       AI works AMONG systems
+├── /ea (Executive)     └── /ab (Arch+Build)    ├── /qa (Quality)
+├── /pa (Personal)                              ├── /rm (Risk)
+└── /km (Knowledge)                             └── /cs (Customer)
+```
+
+**uno:** Clear delegation, you define WHAT, AI handles HOW
+- 3 core files (TODO, PROGRESS, MAREK) + extension files
+- Solo productivity, decision fatigue reduction
+- Starts with: tasks, goals, constraints
+
+**duo:** Team collaboration, iterative role-switching
+- 8 structured files (PRFAQ, CONSTRAINTS, DECISIONS, TODO, PROGRESS, CLAUDE, WORKFLOW, ROLE_PROTOCOL)
+- PM/Designer → Engineer handoff
+- Starts with: prototypes, specs, design files
+
+**tre:** System automation, quality gates, approvals
+- Coming soon
+
+### Why uno Needs CAPTURE Flows (and duo Doesn't)
+
+**duo assumes structured input:**
+- Your Figma prototype already exists
+- Your Lovable app is already built
+- Your PRD is already written
+- **Problem:** Getting that context into Git where engineers can use it
+
+**uno starts with chaos:**
+- Unstructured thoughts ("here's what's in my head")
+- Overwhelm ("everything is urgent")
+- Messy inputs (photos of fridge, voice notes while commuting)
+- **Problem:** Turning overwhelm into calm, actionable next steps
+
+**The difference:**
+```
+duo:  STRUCTURED INPUT → Git-based handoff → Production code
+uno:  CHAOS → Structure → Calm execution
+```
+
+duo solves Layer 2→3 transition (breaking the 41KB token ceiling via file-based context).
+
+uno needs to solve Layer 0→1 transition (capturing unstructured human stress → organized delegation).
+
+### The Cognitive Load Gap
+
+Current uno v2.0 is excellent when you arrive with:
+- ✅ Clear tasks ("book flights for March")
+- ✅ Defined goals ("write intro section")
+- ✅ Structured constraints ("budget is $5000")
+
+But it struggles when you arrive with:
+- ❌ Brain fog ("too much in my head, don't know where to start")
+- ❌ Decision fatigue ("I'm tired of Weetbix-level choices")
+- ❌ Sensory overload (toddler chaos, meeting overload, Slack explosions)
+
+**This is where the 5 cognitive load patterns come in:** They're the missing CAPTURE layer that turns chaos into the structured input uno already handles brilliantly.
+
+---
+
 ## Pattern Mapping
 
 ### 1. Photo/Voice-to-text → Meal Planning → Shopping List
@@ -375,6 +446,58 @@ MESSY INPUT          STRUCTURE             CALM OUTPUT
 
 ---
 
+## Learning from duo: Token Budget Management
+
+### duo's Discovery (Relevant to uno)
+
+duo/ab protocol learned that loading all 8 markdown files cost **15% of the token budget** before any work began. They split into two roles:
+
+- **Architect mode:** Reads strategy files (15% budget)
+- **Builder mode:** Reads execution files only (5% budget)
+
+**The insight:** Different tasks need different context. Don't load everything every time.
+
+### How This Applies to uno v2.1
+
+**Current uno `..start`:** Loads TODO.md, PROGRESS.md, MAREK.md, plus extension files (UPDATES.md, GLOSSARY.md, etc.)
+
+**Problem:** When you add PROFILE.md, template preferences, energy patterns, past capture sessions, uno could hit token bloat.
+
+**Solution: Context-aware loading**
+
+```
+..start               → Load core files only (TODO, PROGRESS, MAREK)
+..start --flow        → Also load PROFILE.md (energy patterns)
+..start --dump        → Also load recent PROGRESS (pattern matching)
+..offload             → Load PROFILE + recent captures (learn preferences)
+..template [name]     → Load template + preferences only
+```
+
+**Token budget impact:**
+- Base `..start`: ~5% (current behavior)
+- `..start --flow`: ~7% (adds PROFILE.md)
+- `..offload`: ~8% (adds recent patterns)
+- `..template`: ~3% (minimal context)
+
+**Why this matters:** As uno grows in capability (templates, preferences, capture history), we must avoid the "load everything" trap that duo/ab discovered. Selective context loading keeps uno fast and cost-effective.
+
+### The Broader Pattern: Layer 3 Thinking
+
+duo teaches **Layer 3 infrastructure** (structured files, Git-based context, agent roles). uno v2.1 adopts the same philosophy:
+
+1. **Structured files** - Each file has a purpose (PROFILE.md = energy patterns, not mixed with TODO.md)
+2. **Git-managed** - Version control for preferences (rollback if energy experiment fails)
+3. **Selective loading** - Commands load only the context they need
+4. **Transparent** - All decisions visible in markdown, no hidden state
+
+**The difference:**
+- duo uses Layer 3 to break the 41KB ceiling (enable complex code projects)
+- uno uses Layer 3 to prevent cognitive load from becoming file load
+
+Both solve the same problem: **How do you give AI persistent memory without drowning in context?**
+
+---
+
 ## Proposed Protocol Enhancements
 
 ### v2.1 Feature Set (Cognitive Load Protection)
@@ -567,6 +690,67 @@ What feels most calming right now?"
    - Keep it simple (3 categories)?
    - Make it freeform ("describe your work style")?
    - Use tags (#needs-variety #batch-friendly #routine-oriented)?
+
+---
+
+## Future Consideration: Treasury Integration
+
+### Hypothesis: Treasury as Resource Management Layer
+
+Based on the protocol family pattern (uno = FOR you, duo = WITH you, tre = AMONG systems), there may be a **treasury** protocol for managing resources across protocols.
+
+### Potential Integration Points for uno
+
+If treasury exists as a resource/budget management layer, cognitive load features would integrate naturally:
+
+**1. Budget Tracking Across Extensions**
+```
+uno/pa tracks trip budget in BUDGET.md
+uno/ea tracks project resources in SYSTEMS.md
+treasury aggregates: "Total committed: $8,500 across 2 active uno projects"
+```
+
+**2. Time Budget Management**
+```
+PROFILE.md defines: "Available deep work: 10hrs/week"
+treasury tracks: "Committed: 7hrs (australia-trip planning, onboarding project)"
+Warns: "3hrs remaining this week"
+```
+
+**3. Cognitive Load as a Resource**
+```
+treasury tracks decision fatigue across all uno instances:
+- "You've made 23 decisions today (typical threshold: 20)"
+- "Suggest: Defer low-priority decisions to tomorrow"
+- "Switch to template-based workflows (lower cognitive load)"
+```
+
+**4. Energy Budgeting**
+```
+PROFILE.md → treasury integration:
+- "High energy budget: 2hrs/day (morning 06:00-08:00)"
+- "Allocated: 1.5hrs (current tasks)"
+- "Available: 0.5hrs for new work"
+```
+
+### Open Questions
+
+1. **Does treasury exist?** (Not explicitly mentioned on kayg.ee website)
+2. **If so, what does it manage?** (Financial? Time? Cognitive resources? All three?)
+3. **Integration approach:**
+   - uno reports to treasury (uno → treasury data flow)
+   - treasury governs uno (treasury sets constraints uno respects)
+   - Peer-to-peer (treasury queries uno when needed)
+
+### Recommended Approach
+
+**For v2.1:** Build cognitive load features standalone (no treasury dependency)
+**For v2.2+:** If treasury protocol exists, add optional integration hooks
+
+**Benefits of decoupling:**
+- uno v2.1 works without treasury
+- Treasury integration becomes an enhancement, not a requirement
+- Users can adopt uno immediately, add treasury later if valuable
 
 ---
 
