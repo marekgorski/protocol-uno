@@ -22,15 +22,29 @@ Use **duo** ([protocol-duo](https://github.com/marekgorski/protocol-duo)) for co
 
 ---
 
+## What's New in v2.1: Personas
+
+uno now includes a **personalization layer**. During onboarding, AI asks what you care about, what signals matter, and what to filter out. This creates `PERSONA.md` — your AI's training data.
+
+**Result:** Every briefing and summary is filtered through YOUR lens automatically.
+
+| Extension | Persona Captures |
+|-----------|------------------|
+| **ea** | Decision style, signal watch, noise filter, key stakeholders |
+| **pa** | Planning style, interests, constraints, avoid list |
+| **km** | Learning style, depth preference, domain focus |
+
+---
+
 ## Extensions
 
 uno comes with domain-specific extensions that customize behavior:
 
 | Extension | Mode | Use Case | Creates |
 |-----------|------|----------|---------|
-| **ea** | Executive Assistant | Onboarding, projects with deadlines, stakeholder management | UPDATES.md, GLOSSARY.md, KNOWLEDGE.md, SYSTEMS.md |
-| **pa** | Personal Assistant | Trip planning, events, moves, personal finance | ITINERARY.md, BOOKINGS.md, BUDGET.md, NOTES.md |
-| **km** | Knowledge Manager | Documentation, archives, reference material | LOG.md, PLANNED.md |
+| **ea** | Executive Assistant | Onboarding, projects with deadlines, stakeholder management | UPDATES.md, GLOSSARY.md, KNOWLEDGE.md, SYSTEMS.md, PERSONA.md |
+| **pa** | Personal Assistant | Trip planning, events, moves, personal finance | ITINERARY.md, BOOKINGS.md, BUDGET.md, NOTES.md, PERSONA.md |
+| **km** | Knowledge Manager | Documentation, archives, reference material | LOG.md, PLANNED.md, PERSONA.md |
 | **none** | Base uno | Simple delegation without domain tracking | (core files only) |
 
 Extension is selected during onboarding — Claude will ask which fits your project.
@@ -57,14 +71,15 @@ Claude will see the `[PLACEHOLDER]` markers and run the onboarding flow:
 
 1. **Extension selection** — ea, pa, km, or none
 2. **Discovery questions** — What, who, problem, success, constraints
-3. **File creation** — Extension-specific files generated
-4. **Ready to work**
+3. **Persona configuration** — What you care about, what to surface, what to filter (NEW)
+4. **File creation** — Extension-specific files generated
+5. **Ready to work**
 
 ### 3. Use session commands
 
 | Command | Purpose |
 |---------|---------|
-| `..start` | Daily briefing (extension-aware), priorities, blockers |
+| `..start` | Personalized briefing (persona-filtered), priorities, blockers |
 | `..end` | Verify AC met, update docs, commit |
 | `..hygiene` | Archive old entries |
 
@@ -77,6 +92,7 @@ All uno projects have:
 ```
 my-project/
 ├── CLAUDE.md      # Protocol + project reference
+├── PERSONA.md     # Your preferences and signals (NEW)
 ├── TODO.md        # Tasks with acceptance criteria
 ├── PROGRESS.md    # Session log
 ├── MAREK.md       # Human-only tasks
@@ -118,8 +134,9 @@ When you write what you learned in a file, AI reads it next session. When you tr
 | TODO.md | What needs doing (with clear "done" criteria) |
 | PROGRESS.md | What happened (so the next session knows) |
 | MAREK.md | What only you can do (so AI doesn't waste time) |
+| PERSONA.md | Who you are, what you care about (NEW) |
 
-Three files. That's all you need for persistent delegation.
+Four files. That's all you need for persistent, personalized delegation.
 
 ---
 
@@ -129,6 +146,7 @@ Three files. That's all you need for persistent delegation.
 2. **Task ownership** — Use markers, don't let Claude spin on human tasks
 3. **Verify before done** — `..end` checks AC explicitly
 4. **Commit after each task** — Don't let work pile up
+5. **Persona filters everything** — Briefings use your preferences automatically
 
 ---
 
@@ -136,26 +154,31 @@ Three files. That's all you need for persistent delegation.
 
 ### uno/ea — Executive Assistant
 
-`..start` produces a daily briefing:
+`..start` produces a persona-filtered daily briefing:
+- **Signals detected** (matching your Signal Watch list)
+- **Decisions needed** (structured per your Decision Style)
 - Status calculation (Day N/90, T-N countdown)
 - Pace check (meetings/day, deliverables vs targets)
-- Risk surface (what might slip?)
-- Knowledge quiz (from GLOSSARY.md)
+- **Filtered out** (items matching your Noise Filter)
 - Today's #1 priority
 
 ### uno/pa — Personal Assistant
 
-`..start` produces a trip briefing:
+`..start` produces a persona-filtered trip briefing:
+- **Matches your interests** (from your Interest tags)
 - Timeline check (next 7 days)
+- **Constraints check** (verified against your stated constraints)
 - Booking deadlines (expiring, needs confirmation)
 - Budget status (spent vs planned)
-- Conditions check (weather, advisories)
+- **Filtered out** (items matching your Avoid list)
 - Today's logistics priority
 
 ### uno/km — Knowledge Manager
 
-`..start` checks:
+`..start` produces a persona-filtered documentation check:
+- **Priority domains** (from your Domain Focus)
 - Pending items in LOG.md
+- **Learning queue** (structured per your Learning Style)
 - Recurring tasks due in PLANNED.md
 - Stale documentation (30+ days)
 - Today's documentation priority
@@ -174,6 +197,7 @@ Three files. That's all you need for persistent delegation.
 
 ## Changelog
 
+- **v2.1** (Jan 14, 2026): Added persona layer — personalized briefings via PERSONA.md configuration
 - **v2.0** (Jan 2, 2026): uno/pa validated with australia-trip implementation, refined NOTES.md template with research tables
 - **v2.0** (Jan 1, 2026): Rebranded to uno, added extension system (ea, pa, km), extension-aware `..start`
 - **v1.2** (Dec 28, 2025): Task ownership markers, handoff system
@@ -188,4 +212,4 @@ MIT — Use freely, modify as needed.
 
 ---
 
-*protocol-uno v2.0 — January 2, 2026*
+*protocol-uno v2.1 — January 14, 2026*

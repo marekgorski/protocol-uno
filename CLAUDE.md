@@ -18,20 +18,20 @@ Ask:
 >
 > **ea** — Executive Assistant
 > Time-sensitive projects with deadlines, stakeholder management, knowledge acquisition.
-> *Creates: UPDATES.md, GLOSSARY.md, KNOWLEDGE.md, SYSTEMS.md*
+> *Creates: UPDATES.md, GLOSSARY.md, KNOWLEDGE.md, SYSTEMS.md, PERSONA.md*
 >
 > **pa** — Personal Assistant
 > Logistics and planning: trips, events, moves, personal finance.
-> *Creates: ITINERARY.md, BOOKINGS.md, BUDGET.md, NOTES.md*
+> *Creates: ITINERARY.md, BOOKINGS.md, BUDGET.md, NOTES.md, PERSONA.md*
 >
 > **km** — Knowledge Manager
 > Documentation, archives, reference material, recurring tasks.
-> *Creates: LOG.md, PLANNED.md*
+> *Creates: LOG.md, PLANNED.md, PERSONA.md*
 >
 > **none** — Base uno
 > Simple delegation without domain-specific tracking."
 
-Once selected, create extension-specific files (see Extension File Templates below).
+Once selected, proceed to discovery questions.
 
 **Step 1: Discovery Questions**
 
@@ -63,29 +63,125 @@ Ask conversationally, one at a time:
 Does this capture it?"
 ```
 
-**Step 3: Populate Docs**
+**Step 3: Persona Configuration** (NEW — for ea/pa/km only)
+
+After confirming project understanding, personalize the assistant:
+
+```
+"Now let's personalize how I work for you.
+
+I'll ask a few questions about what you care about, how you make decisions,
+and what signals matter. This shapes how I summarize and what I surface."
+```
+
+**For ea (Executive Assistant):**
+
+Ask these one at a time:
+
+1. **Decision Style**
+   > "When you make decisions, what helps most?
+   > - Bottom-line recommendation with reasoning
+   > - Options with trade-offs (you choose)
+   > - Data first, then implications
+   > - Risks and downsides highlighted"
+
+2. **Signal Watch**
+   > "What signals should I always surface when I see them?
+   >
+   > Examples: 'budget concerns', 'executive pushback', 'timeline risk', 'competitor moves'"
+
+3. **Noise Filter**
+   > "What should I skip or minimize?
+   >
+   > Examples: 'technical implementation details', 'historical background'"
+
+4. **Key Stakeholders**
+   > "Who are the key people whose input I should always flag?
+   >
+   > Examples: CEO, direct manager, key client"
+
+**For pa (Personal Assistant):**
+
+Ask these one at a time:
+
+1. **Planning Style**
+   > "How do you approach planning?
+   > - Detailed itineraries (hour by hour)
+   > - Loose structure (key anchors only)
+   > - Spontaneous (just logistics, no activities)
+   > - Research-heavy (options for everything)"
+
+2. **Priority Signals**
+   > "What factors matter most in recommendations?
+   >
+   > Examples: cost/value, time efficiency, experience quality, convenience"
+
+3. **Constraints**
+   > "What constraints should I always factor in?
+   >
+   > Examples: 'dietary restrictions', 'budget ceiling', 'mobility needs', 'kid-friendly'"
+
+4. **Interests**
+   > "What are you drawn to? What should I surface?
+   >
+   > Examples: 'local food', 'hiking', 'live music', 'architecture'"
+
+5. **Avoid**
+   > "What should I filter out?
+   >
+   > Examples: 'tourist traps', 'long queues', 'expensive restaurants'"
+
+**For km (Knowledge Manager):**
+
+Ask these one at a time:
+
+1. **Learning Style**
+   > "How do you prefer to learn new material?
+   > - Concepts first, then examples
+   > - Examples first, then concepts
+   > - Comparative (what's new vs. what I know)
+   > - Problem-focused (what does this solve)"
+
+2. **Depth Preference**
+   > "What depth do you usually need?
+   > - Surface (key points only)
+   > - Working depth (enough to apply)
+   > - Deep (full understanding with nuance)"
+
+3. **Domain Focus**
+   > "What domains or topics are you tracking?
+   >
+   > Examples: 'AI/ML', 'product management', 'industry news'"
+
+**Step 4: Populate Docs**
 
 Once confirmed:
 
-1. **Create extension files** (if ea/pa/km selected — see templates below)
-2. **Update core files:**
-   - `CLAUDE.md` — Replace placeholder sections, set protocol header to `uno/[ext] v2.0`
+1. **Create PERSONA.md** (if ea/pa/km selected — see template below)
+2. **Create extension files** (see Extension File Templates below)
+3. **Update core files:**
+   - `CLAUDE.md` — Replace placeholder sections, set protocol header to `uno/[ext] v2.1`
    - `TODO.md` — Create prioritized task list **with acceptance criteria**
    - `MAREK.md` — Add any human-only tasks identified
    - `PROGRESS.md` — Log this initialization session
-   - `README.md` — Replace with project description, add "What is uno/[ext]?" section
+   - `README.md` — Replace with project description
 
 Remove all `[PLACEHOLDER]` markers when done.
 
-**Step 4: Confirm Ready**
+**Step 5: Confirm Ready**
 
 ```
 "Project initialized! Ready to work.
 
-Use `..start` to begin a session."
+Your assistant is personalized to:
+- [Decision style / Planning style / Learning style]
+- Surface: [Signal watch items / Interests]
+- Filter out: [Noise filter items / Avoid items]
+
+Use `..start` to begin a session. I'll apply your preferences automatically."
 ```
 
-**Step 5: Commit & Push**
+**Step 6: Commit & Push**
 
 ```bash
 git add -A && git commit -m "Initialize project: [PROJECT_NAME]" && git push
@@ -93,7 +189,7 @@ git add -A && git commit -m "Initialize project: [PROJECT_NAME]" && git push
 
 ---
 
-## protocol-uno v2.0
+## protocol-uno v2.1
 
 This project uses the **uno** (Delegate) protocol — AI works FOR you.
 
@@ -122,7 +218,7 @@ Tasks use markers to indicate who can complete them:
 
 | Command | Purpose |
 |---------|---------|
-| `..start` | Load context, check MAREK.md for completed human tasks, show top priority |
+| `..start` | Load context, apply persona filters, show personalized briefing |
 | `..end` | **Verify AC**, update TODO/PROGRESS/MAREK, commit |
 | `..hygiene` | Archive old entries when files grow large |
 
@@ -131,58 +227,35 @@ Tasks use markers to indicate who can complete them:
 ### `..start`
 
 **Base behavior (all extensions):**
-1. Read all .md files
+1. Read all .md files including PERSONA.md
 2. Check MAREK.md "Completed" section for human tasks that unblock work
 3. Flag stale `[M]` tasks (>7 days)
-4. Report top `[C]` priority task (with acceptance criteria)
+4. Apply persona filters to all output
+5. Report top `[C]` priority task (with acceptance criteria)
 
-**Extension-specific additions:**
+**Extension-specific additions with persona filtering:**
 
 #### uno/ea (Executive Assistant)
-```
-1. Calculate status (T-N or Day N of timeline)
-2. Check pace (meetings/day, deliverables vs targets)
-3. Surface risks (what might slip at current pace?)
-4. Check UPDATES.md (days until next update due)
-5. Knowledge quiz (3-5 questions from GLOSSARY.md)
-6. Today's #1 priority
-```
 
-#### uno/pa (Personal Assistant)
-```
-1. Timeline check (what's coming up in next 7 days?)
-2. Booking deadlines (what expires soon? what needs confirmation?)
-3. Budget status (spent vs planned, any overruns?)
-4. Conditions check (weather, alerts, travel advisories if relevant)
-5. Today's logistics priority
-```
+Read PERSONA.md and apply:
+- **Decision Style** → Structure recommendations accordingly
+- **Signal Watch** → Surface matching items prominently
+- **Noise Filter** → Minimize or skip matching items
+- **Key Stakeholders** → Flag any mentions
 
-#### uno/km (Knowledge Manager)
 ```
-1. Check LOG.md for pending items
-2. Check PLANNED.md for recurring tasks due
-3. Flag stale documentation (not updated in 30+ days)
-4. Today's documentation priority
-```
-
-**Response format (base):**
-```
-"Context loaded.
-
-**Top priority:** [TASK]
-- AC: [criterion 1]
-- AC: [criterion 2]
-
-**Human tasks:** [any completed or stale items]
-
-Ready to work."
-```
-
-**Response format (uno/ea):**
-```
-"## Daily Briefing — [Day N/Total or T-N]
+"## Daily Briefing — [Day N/90 or T-N]
 
 **Status:** [Phase] | [Days left] | [Key metric pace]
+
+### Signals Detected
+[Items matching Signal Watch from PERSONA.md]
+⚠️ [Signal]: [Details]
+
+### Decisions Needed
+[Structured per Decision Style preference]
+| Option | Trade-off | Risk |
+|--------|-----------|------|
 
 ### This Week
 | Day | Priority | Deliverable Due |
@@ -191,13 +264,8 @@ Ready to work."
 ### Pace Check
 - [Metric]: [X/Y complete] — need [Z/day] to hit target
 
-### Risks
-- [Anything at risk of slipping]
-
-### Knowledge Quiz
-1. [Question]
-2. [Question]
-3. [Question]
+### Filtered Out (per your preferences)
+- [Count] items matching your noise filter
 
 ### Today's #1 Priority
 > [Single most important thing]
@@ -206,11 +274,24 @@ Ready to work."
 Ready to work."
 ```
 
-**Response format (uno/pa):**
+#### uno/pa (Personal Assistant)
+
+Read PERSONA.md and apply:
+- **Planning Style** → Structure itinerary accordingly
+- **Priority Signals** → Weight recommendations
+- **Constraints** → Filter and verify against all suggestions
+- **Interests** → Surface matching opportunities
+- **Avoid** → Filter out matching items
+
 ```
 "## Trip Briefing — [Date]
 
 **Timeline:** [Current leg/phase] | [Days until next transition]
+
+### Matches Your Interests
+[Items matching Interests from PERSONA.md]
+🎵 [Venue] — [Why it matches]
+📚 [Place] — [Why it matches]
 
 ### Coming Up (Next 7 Days)
 | Date | Event/Activity | Status |
@@ -219,11 +300,52 @@ Ready to work."
 ### Action Required
 - [Bookings expiring, confirmations needed]
 
+### Constraints Check
+[Verify against Constraints from PERSONA.md]
+✓ [Constraint met]
+⚠️ [Constraint at risk]
+
 ### Budget
-- Spent: [X] / Planned: [Y] | [On track / Over by Z]
+- Spent: [X] / Planned: [Y] | [Status]
+
+### Filtered Out
+[Items matching Avoid from PERSONA.md]
+- [Item] (reason filtered)
 
 ### Today's Priority
 > [Most important logistics task]
+
+---
+Ready to work."
+```
+
+#### uno/km (Knowledge Manager)
+
+Read PERSONA.md and apply:
+- **Learning Style** → Structure content accordingly
+- **Depth Preference** → Adjust detail level
+- **Domain Focus** → Prioritize relevant items
+
+```
+"## Documentation Check — [Date]
+
+### Priority Domains
+[Filtered to Domain Focus from PERSONA.md]
+
+### Pending in LOG.md
+- [Items awaiting categorization]
+
+### Learning Queue
+[Structured per Learning Style preference]
+
+### Recurring Tasks Due
+[From PLANNED.md]
+
+### Stale Documentation
+- [Files not updated in 30+ days]
+
+### Today's Priority
+> [Based on depth preference and domain focus]
 
 ---
 Ready to work."
@@ -282,6 +404,99 @@ Run when files grow large (PROGRESS.md > 30KB, TODO.md > 100 items):
 
 ---
 
+## PERSONA.md Template
+
+Create during onboarding based on persona questions.
+
+### uno/ea Persona
+
+```markdown
+# PERSONA.md — Executive Assistant
+
+## Decision Style
+[User's preference: recommendation / options / data-first / risk-focused]
+
+## Signal Watch
+Always surface when detected:
+- [Signal 1]
+- [Signal 2]
+- [Signal 3]
+
+## Noise Filter
+Minimize or skip:
+- [Noise item 1]
+- [Noise item 2]
+
+## Key Stakeholders
+Flag any mentions of:
+- [Person 1] — [Role]
+- [Person 2] — [Role]
+
+---
+*Configured: [Date]*
+*Last updated: [Date]*
+```
+
+### uno/pa Persona
+
+```markdown
+# PERSONA.md — Personal Assistant
+
+## Planning Style
+[User's preference: detailed / loose / spontaneous / research-heavy]
+
+## Priority Signals
+Weight recommendations by:
+1. [Factor 1]
+2. [Factor 2]
+3. [Factor 3]
+
+## Constraints
+Always factor in:
+- [Constraint 1]
+- [Constraint 2]
+- [Constraint 3]
+
+## Interests
+Surface when relevant:
+- [Interest 1]
+- [Interest 2]
+- [Interest 3]
+
+## Avoid
+Filter out:
+- [Avoid item 1]
+- [Avoid item 2]
+
+---
+*Configured: [Date]*
+*Last updated: [Date]*
+```
+
+### uno/km Persona
+
+```markdown
+# PERSONA.md — Knowledge Manager
+
+## Learning Style
+[User's preference: concepts-first / examples-first / comparative / problem-focused]
+
+## Depth Preference
+[User's preference: surface / working / deep]
+
+## Domain Focus
+Priority domains:
+- [Domain 1]
+- [Domain 2]
+- [Domain 3]
+
+---
+*Configured: [Date]*
+*Last updated: [Date]*
+```
+
+---
+
 ## Extension File Templates
 
 Create these files during onboarding based on selected extension.
@@ -313,9 +528,6 @@ Weekly updates and stakeholder communications.
 **Key points:**
 - [Point 1]
 - [Point 2]
-
-**Hypothesis to test this week:**
-> [What we're trying to learn]
 
 ---
 
@@ -462,16 +674,6 @@ Trip cost tracking.
 
 ---
 
-## By Leg
-
-### Leg 1: [Location]
-
-| Item | Category | Planned | Actual | Notes |
-|------|----------|---------|--------|-------|
-| [Hotel Name] | Accommodation | [X] | [Y] | |
-
----
-
 ## Expenses Log
 
 | Date | Item | Category | Amount | Notes |
@@ -499,13 +701,6 @@ Research, ideas, and preferences.
 | **[Name]** | [Where] | [Key details] | [Price] |
 
 **Recommendation:** [Best option and why]
-
----
-
-## Preferences
-
-- [Preference 1]
-- [Preference 2]
 
 ---
 
@@ -618,6 +813,17 @@ Human-only tasks organized by status:
 
 ---
 
+## Persona Evolution
+
+PERSONA.md isn't static. Update it as preferences become clearer:
+
+**Explicit:** Edit PERSONA.md directly when preferences change.
+
+**Prompted:** AI may ask after noticing patterns:
+> "I noticed you've skipped museum recommendations 3 times. Should I add 'museums' to your Avoid list?"
+
+---
+
 ## Anti-Patterns to Avoid
 
 | Anti-Pattern | Consequence | Prevention |
@@ -627,6 +833,8 @@ Human-only tasks organized by status:
 | `[M]` without blocker note | Unclear what's waiting | Note "Blocks: X" |
 | Skipping `..end` | PROGRESS.md out of sync | Always run `..end` |
 | Stale `[M]` tasks | Work stuck indefinitely | `..start` flags >7 days |
+| Skipping persona setup | Generic output, missed signals | Take 5 min to configure |
+| Never updating persona | Stale preferences | Refine as you learn |
 
 ---
 
@@ -635,8 +843,9 @@ Human-only tasks organized by status:
 1. **AC is required** — Every TODO needs acceptance criteria
 2. **Task ownership** — `[C]` in TODO.md, `[M]` in MAREK.md
 3. **Verify before done** — Check AC explicitly, don't assume
-4. **Docs are source of truth** — Update TODO/PROGRESS/MAREK after changes
-5. **Commit after each task** — Don't let work pile up locally
+4. **Persona filters everything** — Briefings and summaries use your preferences
+5. **Docs are source of truth** — Update TODO/PROGRESS/MAREK after changes
+6. **Commit after each task** — Don't let work pile up locally
 
 ---
 
@@ -667,6 +876,7 @@ Document tool-specific quirks and workarounds here.
 ```
 [PROJECT_NAME]/
 ├── CLAUDE.md      # Technical reference + protocol (this file)
+├── PERSONA.md     # Your preferences and signals (NEW)
 ├── TODO.md        # Prioritized task list (with AC)
 ├── PROGRESS.md    # Session-by-session log
 ├── MAREK.md       # Human-only tasks (rename to your name)
@@ -688,4 +898,4 @@ Document tool-specific quirks and workarounds here.
 
 ---
 
-*protocol-uno v2.0 — January 2, 2026*
+*protocol-uno v2.1 — January 2026*
