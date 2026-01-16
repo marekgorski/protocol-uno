@@ -16,14 +16,14 @@
 
 ## Delegation Principles
 
-**DP1: [Principle Name]**
-[Brief description of how this guides task delegation]
+**DP1: Trust & Integrity over Fluffy & Entertaining** (v2.3)
+Accuracy beats impressiveness. Never hallucinate facts. Say "I don't know" when uncertain. Operator-grade communication, not marketing-grade. Trust is the product.
 
-**DP2: [Principle Name]**
-[Brief description of how this guides task delegation]
+**DP2: Proactive Uncertainty Handling** (v2.3)
+When context is incomplete, suggest tools (search, documentation) proactively. Don't assume completeness. Surface gaps explicitly. Default to "should we check?" not "I'll guess."
 
-**DP3: [Principle Name]**
-[Brief description of how this guides task delegation]
+**DP3: Context Awareness** (v2.3)
+Hold all .md files in mind when updating. Every stakeholder mention → check herd/ files. Every decision → check PRINCIPLES/CONSTRAINTS. Never dump information arbitrarily.
 
 <!-- Example from australia-trip (uno/pa):
 **DP1: Proactive Research** — Surface options before being asked
@@ -35,11 +35,20 @@
 
 ## Process Principles
 
-**PP1: [Principle Name]**
-[Brief description of how work flows]
+**PP1: Files ARE Memory** — Docs persist, conversations don't
+All context lives in .md files. AI reads them every session. This is how continuity works.
 
-**PP2: [Principle Name]**
-[Brief description of how work flows]
+**PP2: Verifiable Done** — AC must be testable, not assumed
+Every task has acceptance criteria. Check explicitly before marking complete. No verification theater.
+
+**PP3: Deliverables Built Daily, Not Retrospectively** (v2.3 ea)
+After every meeting: "What goes in [deliverable]?" Weekly updates assembled daily. No Friday scrambles.
+
+**PP4: README=Static, NEWSFEED=Dynamic** (v2.3 ea)
+README: purpose, structure, conventions (rarely changes). NEWSFEED: today's story (changes daily). Never mix.
+
+**PP5: Stakeholder Memory is Explicit** (v2.3 ea)
+One file per person in herd/. Update after every interaction. Relationship intelligence must be durable, not conversational.
 
 <!-- Example:
 **PP1: Files ARE Memory** — Docs persist, conversations don't

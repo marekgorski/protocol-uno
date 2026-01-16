@@ -219,7 +219,9 @@ Tasks use markers to indicate who can complete them:
 | Command | Purpose |
 |---------|---------|
 | `..start` | Load context, apply persona filters, show personalized briefing |
+| `..gm` | **Good morning** — Priorities, risks, DMs to send (ea extension) |
 | `..end` | **Verify AC**, update TODO/PROGRESS/MAREK, commit |
+| `..gn` | **Good night** — Deliverables check, commit, prep tomorrow (ea extension) |
 | `..hygiene` | Archive old entries when files grow large |
 
 ---
@@ -389,6 +391,122 @@ Changes committed and pushed."
 Options:
 1. Continue working to meet AC
 2. Close session without marking complete"
+```
+
+---
+
+### `..gm` (Good Morning — ea extension)
+
+**When to use:** Start of workday with uno/ea extension
+
+**Purpose:** Morning briefing focused on today's execution
+
+**Behavior:**
+1. Read all .md files (PERSONA, NEWSFEED, TODO, PROGRESS, MAREK, herd/*)
+2. Check NEWSFEED.md for yesterday's context
+3. Check MAREK.md for completed tasks that unblock work
+4. Surface today's priorities (filtered by PERSONA.md)
+5. Flag risks and blockers
+6. Suggest DMs to send (from herd/ files or MAREK.md drafts)
+
+**Response format:**
+```
+"## Good Morning — [Date] — Day [N/90 or T-N]
+
+**Yesterday's Context:**
+[1-2 sentence summary from NEWSFEED.md]
+
+**Today's Priorities:**
+1. **[Task]** — [Why it matters] — [Estimated effort]
+2. **[Task]** — [Why it matters] — [Estimated effort]
+3. **[Task]** — [Why it matters] — [Estimated effort]
+
+**Risks to Watch:**
+⚠️ **[Risk]:** [Why it matters] — [From PERSONA Signal Watch]
+
+**DMs to Send:**
+- **[Person]** → [Draft ready in MAREK.md]
+- **[Person]** → [Need to follow up on [topic]]
+
+**Blockers:**
+- [Blocker] → Waiting on [who/what]
+
+**Ready to start with #1?**"
+```
+
+---
+
+### `..gn` (Good Night — ea extension)
+
+**When to use:** End of workday with uno/ea extension
+
+**Purpose:** Close day with verification and prep tomorrow
+
+**CRITICAL:** This command enforces deliverables discipline
+
+**Behavior:**
+1. **Verify AC** (same as ..end) — Check each task worked on today
+2. **Deliverables check** — Ask: "Did you update deliverables today?"
+   - Check UPDATES.md, weekly reports, stakeholder communications
+   - If meeting happened: "What goes in [deliverable]?"
+   - If deliverable is stale (>2 days): Flag it
+3. **Update herd/ files** — Prompt: "Any stakeholder interactions to capture?"
+4. **Update NEWSFEED.md** — Prepare tomorrow's context
+   - What happened today (ELI5 summary)
+   - What's live tomorrow
+   - Signals detected (from PERSONA.md)
+5. **Update PROGRESS.md** — Add session entry (newest at top)
+6. **Commit and push** — `git add -A && git commit -m "docs: [summary]" && git push`
+7. **Prep tomorrow** — Set top 3 priorities for ..gm
+
+**Response format:**
+```
+"## Good Night — [Date]
+
+**Completed Today:**
+- [x] [Task] — AC verified ✅
+- [x] [Task] — AC verified ✅
+
+**Deliverables Check:**
+✅ Updated UPDATES.md with [content]
+⚠️ Weekly report needs update (last touched [date])
+
+**Stakeholder Updates:**
+✅ herd/GIO.md updated with meeting notes
+⏳ herd/SARAH.md — no interaction today
+
+**Tomorrow's Prep:**
+**Top 3:**
+1. [Task] — [Why]
+2. [Task] — [Why]
+3. [Task] — [Why]
+
+**Flagged for tomorrow:**
+- [Blocker to address]
+- [DM to send]
+
+**Committed:** [commit hash]
+
+Sleep well. Run ..gm in the morning to pick up where we left off."
+```
+
+**If deliverables not updated:**
+```
+"⚠️ Deliverables Check Failed
+
+**Stale deliverables:**
+- UPDATES.md last updated [N] days ago
+- Weekly report due Friday — not started
+
+**You had meetings today with:**
+- [Person] → Does this go in a deliverable?
+
+Options:
+1. Update deliverables now (5 min)
+2. Close session and flag for tomorrow
+3. Mark as not needed
+
+What should we do?"
 ```
 
 ---
@@ -626,6 +744,44 @@ Tools and access inventory.
 |--------|---------|--------|--------|
 | [Tool] | [What it's for] | [URL/how] | ✅ / ❌ |
 ```
+
+**NEWSFEED.md:** (NEW v2.3)
+See `/templates/NEWSFEED.md` for full template.
+
+Dynamic daily newspaper. Separate from static README.md.
+- Today's context (ELI5 summary)
+- What's live today
+- Signals detected (from PERSONA.md)
+- Decisions made
+- Deliverables status
+- Stakeholder updates (links to herd/)
+- Tomorrow's prep
+
+**Rule:** Links inline with narrative, never orphaned.
+
+**CONSTRAINTS.md:** (NEW v2.3)
+See `/templates/CONSTRAINTS.md` for full template.
+
+What we DON'T do — learned from failures. Complements PRINCIPLES.md.
+- Communication constraints (no lazy linking, no false certainty)
+- Deliverable constraints (no Friday scrambles)
+- Context constraints (hold all files, README=static)
+- Process constraints (no assumed completeness)
+- Trust principles (accuracy > impressiveness)
+
+**herd/ directory:** (NEW v2.3)
+See `/templates/herd/STAKEHOLDER_TEMPLATE.md` for full template.
+
+One file per stakeholder. Single source of truth for relationship intelligence.
+- Quick reference (communication style, decision authority)
+- Current context (what they care about)
+- Concerns & blockers
+- Meeting history
+- Communication log
+- Relationship intelligence
+- Deliverables & commitments
+
+**Rule:** Update after EVERY interaction.
 
 ---
 
@@ -873,6 +1029,103 @@ PERSONA.md isn't static. Update it as preferences become clearer:
 
 ---
 
+## Trust & Integrity Principles (v2.3)
+
+> **Core insight from operational feedback:**
+> "Trust & Integrity over Fluffy & Entertaining"
+
+**What this means in practice:**
+
+### Accuracy First
+- **Never hallucinate** URLs, API endpoints, or facts to fill gaps
+- Say "I don't know" when uncertain
+- Suggest tools proactively (e.g., search, documentation) when context is incomplete
+- Admit incomplete information rather than guessing
+
+### Communication Style
+- **Brevity > Cleverness** — Operator-grade, not marketing-grade
+- **Clarity > Complexity** — Simple, direct language
+- **Evidence > Superlatives** — Avoid "amazing", "perfect", "best" without proof
+- **Honesty > Validation** — Respectfully disagree when necessary, don't validate beliefs without verification
+
+### Link Quality Standards
+**❌ BAD:** Lazy linking
+```
+"Here's the doc: https://..."
+"See this link for more info"
+```
+
+**✅ GOOD:** Inline narrative context
+```
+"The pricing edge cases (page 6 of the vendor doc) show three scenarios where..."
+"Meeting notes in herd/GIO.md (Jan 15 section) cover his concerns about API limits"
+```
+
+**Rule:** Links must be embedded inline with narrative. Context first, link second. Never orphaned URLs.
+
+### Proactive Tool Suggestion (Onyx Pattern)
+
+**Default behavior:** Suggest tools when uncertain, don't assume completeness
+
+**When to suggest external tools:**
+- Stakeholder context incomplete → "Should we search for background on [person]?"
+- Technical details unclear → "Should we check the documentation for [system]?"
+- Relationship intelligence needed → "What does [stakeholder] care about? Should we research?"
+
+**Workflow:**
+1. EA detects gap in knowledge
+2. EA suggests tool/search proactively
+3. Human runs tool or provides context
+4. EA updates relevant files (herd/, NEWSFEED.md, etc.)
+5. EA thanks human for input
+
+**Never:**
+- Assume local context is complete
+- Fill gaps with confident but unverified information
+- Skip tool suggestion out of politeness
+
+**Always:**
+- Surface uncertainty explicitly
+- Provide reasoning for tool suggestion
+- Update files immediately after receiving new information
+
+### Context Awareness Rules
+
+**File Hygiene Discipline:**
+
+When absorbing new information, **always check relevant files before updating:**
+
+**Rule 1:** Every stakeholder mention → check if herd/ file needs updating
+- Meeting mentioned → Update herd/[NAME].md
+- DM sent → Log in herd/[NAME].md communication log
+- Concern raised → Add to herd/[NAME].md concerns section
+
+**Rule 2:** Every decision → check if PRINCIPLES.md or CONSTRAINTS.md needs updating
+- Pattern emerged (3+ similar decisions) → Extract to PRINCIPLES.md
+- Failure or near-miss → Document in CONSTRAINTS.md
+
+**Rule 3:** Daily context → update NEWSFEED.md, not README.md
+- NEWSFEED.md = dynamic (today's story, changes daily)
+- README.md = static (purpose, structure, conventions - rarely changes)
+- PROGRESS.md = historical (session log, archived weekly)
+
+**Rule 4:** Hold context of ALL .md files when updating
+- Don't dump information arbitrarily
+- Cross-reference related files
+- Maintain single source of truth per topic
+
+### Deliverables Discipline (ea extension)
+
+**Problem from feedback:** Weekly updates became Friday scrambles because updates were built retrospectively instead of daily.
+
+**Solution:**
+- After every meeting: "What goes in [deliverable]?"
+- ..gn checks: "Did you update deliverables today?"
+- Weekly updates built daily, never left for end of week
+- Stale deliverable (>2 days unchanged) gets flagged
+
+---
+
 ## Anti-Patterns to Avoid
 
 | Anti-Pattern | Consequence | Prevention |
@@ -880,10 +1133,16 @@ PERSONA.md isn't static. Update it as preferences become clearer:
 | TODO without AC | "Done" but incomplete | Always include AC |
 | No task markers | Claude attempts `[M]` tasks | Use ownership markers |
 | `[M]` without blocker note | Unclear what's waiting | Note "Blocks: X" |
-| Skipping `..end` | PROGRESS.md out of sync | Always run `..end` |
+| Skipping `..end` or `..gn` | PROGRESS.md out of sync | Always run end-of-day command |
 | Stale `[M]` tasks | Work stuck indefinitely | `..start` flags >7 days |
 | Skipping persona setup | Generic output, missed signals | Take 5 min to configure |
 | Never updating persona | Stale preferences | Refine as you learn |
+| **Friday scrambles** | **Weekly updates done retrospectively** | **Build deliverables daily (..gn check)** |
+| **Lazy linking** | **Links without context** | **Inline narrative, never orphaned URLs** |
+| **README bloat** | **Mixed static + dynamic** | **README=static, NEWSFEED=dynamic** |
+| **Assumed completeness** | **False confidence, missed context** | **Suggest tools proactively when uncertain** |
+| **Stakeholder amnesia** | **Lost relationship intelligence** | **Update herd/ files after every interaction** |
+| **Arbitrary file dumps** | **Lost single source of truth** | **Check all .md files before updating** |
 
 ---
 
@@ -895,6 +1154,12 @@ PERSONA.md isn't static. Update it as preferences become clearer:
 4. **Persona filters everything** — Briefings and summaries use your preferences
 5. **Docs are source of truth** — Update TODO/PROGRESS/MAREK after changes
 6. **Commit after each task** — Don't let work pile up locally
+7. **Trust & integrity first** (v2.3) — Accuracy over impressiveness, admit uncertainty
+8. **Links need context** (v2.3) — Inline narrative, never orphaned URLs
+9. **README=static, NEWSFEED=dynamic** (v2.3) — Separate concerns
+10. **Deliverables daily** (v2.3 ea) — Build incrementally, not Friday scrambles
+11. **Update herd/ after interactions** (v2.3 ea) — Stakeholder memory is critical
+12. **Check all .md files before updating** (v2.3) — Context awareness prevents duplication
 
 ---
 
@@ -922,17 +1187,34 @@ Document tool-specific quirks and workarounds here.
 
 ## Structure
 
+**Base uno structure:**
 ```
 [PROJECT_NAME]/
 ├── CLAUDE.md      # Technical reference + protocol (this file)
 ├── PERSONA.md     # Your preferences and signals
-├── PRINCIPLES.md  # Distilled wisdom from decisions (NEW in v2.2)
+├── PRINCIPLES.md  # Distilled wisdom from decisions
 ├── TODO.md        # Prioritized task list (with AC)
 ├── PROGRESS.md    # Session-by-session log
 ├── MAREK.md       # Human-only tasks (rename to your name)
-├── README.md      # User-facing documentation
+├── README.md      # Static: purpose, structure, conventions
 └── _archive/      # Old entries (created by ..hygiene)
 ```
+
+**uno/ea extension adds:**
+```
+[PROJECT_NAME]/
+├── NEWSFEED.md    # Dynamic: daily newspaper, today's context (NEW v2.3)
+├── CONSTRAINTS.md # What we avoid (learned from failures) (NEW v2.3)
+├── UPDATES.md     # Weekly stakeholder communications
+├── GLOSSARY.md    # Domain terms and acronyms
+├── KNOWLEDGE.md   # Quiz tracking and learning log
+├── SYSTEMS.md     # Tools and access inventory
+└── herd/          # One file per stakeholder (NEW v2.3)
+    ├── [NAME].md
+    └── [NAME].md
+```
+
+**Key principle:** README.md = static reference | NEWSFEED.md = dynamic daily context
 
 ---
 
@@ -948,4 +1230,4 @@ Document tool-specific quirks and workarounds here.
 
 ---
 
-*protocol-uno v2.1 — January 2026*
+*protocol-uno v2.3 — January 17, 2026*

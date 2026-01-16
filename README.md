@@ -22,6 +22,27 @@ Use **duo** ([protocol-duo](https://github.com/marekgorski/protocol-duo)) for co
 
 ---
 
+## What's New in v2.3: Operational Refinements (Jan 2026)
+
+**Based on 10 days of real-world uso/ea feedback in high-pressure fintech onboarding:**
+
+**New commands:**
+- `..gm` (Good Morning) — Morning briefing with priorities, risks, DMs to send
+- `..gn` (Good Night) — Enhanced close with deliverables check, NEWSFEED prep
+
+**New files for ea extension:**
+- **NEWSFEED.md** — Dynamic daily newspaper (separates from static README.md)
+- **CONSTRAINTS.md** — What we avoid (learned from failures, complements PRINCIPLES.md)
+- **herd/** directory — One file per stakeholder for relationship intelligence
+
+**Trust & Integrity principles:**
+- No lazy linking — inline narrative context required
+- Proactive tool suggestions — admit uncertainty, suggest searches
+- Deliverables discipline — build daily, not Friday scrambles
+- Context awareness — check all .md files before updating
+
+---
+
 ## What's New in v2.2: Hygiene & Principles
 
 **Token budget monitoring** — Enhanced `..hygiene` command with health checks, "Next Session Test", and automated thresholds.
@@ -205,6 +226,7 @@ Four files. That's all you need for persistent, personalized delegation.
 
 ## Changelog
 
+- **v2.3** (Jan 17, 2026): Operational refinements from 10-day fintech EA usage — added `..gm`/`..gn` commands, NEWSFEED.md pattern, CONSTRAINTS.md template, herd/ stakeholder files, Trust & Integrity principles, link quality standards, deliverables discipline
 - **v2.2** (Jan 16, 2026): Added PRINCIPLES.md template, enhanced `..hygiene` with token budget monitoring (propagated from duo v1.4)
 - **v2.1** (Jan 14, 2026): Added persona layer — personalized briefings via PERSONA.md configuration
 - **v2.0** (Jan 2, 2026): uno/pa validated with australia-trip implementation, refined NOTES.md template with research tables
@@ -221,4 +243,4 @@ MIT — Use freely, modify as needed.
 
 ---
 
-*protocol-uno v2.2 — January 16, 2026*
+*protocol-uno v2.3 — January 17, 2026*
