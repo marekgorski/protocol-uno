@@ -4,6 +4,81 @@ Session-by-session log for [PROJECT_NAME]. Newest entries at top.
 
 ---
 
+## Session: 2026-01-17 — Protocol v2.3: Operational Refinements
+
+### What Was Accomplished
+
+**Architected and implemented v2.3 based on 10-day real-world feedback from fintech EA usage:**
+
+**New commands added:**
+1. `..gm` (Good Morning) — Morning briefing with priorities, risks, DMs to send
+2. `..gn` (Good Night) — Enhanced close with deliverables check, NEWSFEED prep, commit
+
+**New file templates created:**
+1. `NEWSFEED.md` — Dynamic daily newspaper (separates from static README)
+2. `CONSTRAINTS.md` — What we avoid (learned from failures)
+3. `herd/STAKEHOLDER_TEMPLATE.md` — One file per stakeholder for relationship intelligence
+
+**Core principles documented:**
+1. Trust & Integrity over Fluffy & Entertaining
+2. Proactive tool suggestion (Onyx pattern) — admit uncertainty, suggest searches
+3. Link quality standards — inline narrative context required
+4. Deliverables discipline — build daily, not Friday scrambles
+5. Context awareness rules — check all .md files before updating
+
+**Updates to existing files:**
+1. `CLAUDE.md` — Added v2.3 commands, Trust & Integrity section, context awareness rules
+2. `README.md` — Added v2.3 features, updated changelog
+3. `PRINCIPLES.md` — Added operational learnings from feedback
+4. `V2.3_RELEASE_NOTES.md` — Comprehensive changelog and migration guide
+
+**New anti-patterns documented:**
+- Friday scrambles (deliverables done retrospectively)
+- Lazy linking (links without context)
+- README bloat (mixed static + dynamic)
+- Assumed completeness (false confidence)
+- Stakeholder amnesia (lost relationship intelligence)
+- Arbitrary file dumps (lost single source of truth)
+
+### Files Created
+- `V2.3_RELEASE_NOTES.md` — Complete changelog and migration guide
+- `templates/NEWSFEED.md` — Daily newspaper template
+- `templates/CONSTRAINTS.md` — Failure pattern tracking template
+- `templates/herd/STAKEHOLDER_TEMPLATE.md` — Stakeholder file template
+
+### Files Updated
+- `CLAUDE.md` — v2.3 commands, principles, file structure, anti-patterns
+- `README.md` — v2.3 features, changelog
+- `PRINCIPLES.md` — Delegation and process principles with v2.3 learnings
+- `PROGRESS.md` — This entry
+
+### Verified
+- All templates follow operational feedback patterns
+- Commands (..gm, ..gn) enforce deliverables discipline
+- Link quality standards documented with examples
+- Context awareness rules prevent file duplication
+- Trust & integrity principles guide all communication
+
+### Key Insights from Feedback
+
+**Validated patterns (keep & strengthen):**
+- Herd files (one file per stakeholder) scales to 40+ people
+- Immediate post-meeting updates prevent detail loss
+- DM drafts in files reduce cognitive load
+- Daily commits maintain trust
+
+**Failed patterns (fixed in v2.3):**
+- Weekly deliverables → Friday scrambles (now: daily building via ..gn)
+- README bloat → mixed static/dynamic (now: NEWSFEED.md separation)
+- Lazy linking → lost context (now: inline narrative required)
+- Assumed completeness → false confidence (now: proactive tool suggestions)
+
+### Next Session
+
+**TOP PRIORITY:** Test v2.3 patterns in a new uno/ea project to validate implementation
+
+---
+
 ## Session: 2025-12-28 — Task Ownership Handoff System (v1.2)
 
 ### What Was Accomplished
