@@ -395,12 +395,61 @@ Options:
 
 ### `..hygiene`
 
-Run when files grow large (PROGRESS.md > 30KB, TODO.md > 100 items):
+**Context Garbage Collection**
 
-1. Archive old PROGRESS entries (> 30 days) to `_archive/PROGRESS_[YYYY-MM].md`
-2. Archive completed TODO items to `_archive/TODO_DONE_[YYYY-MM].md`
-3. Archive completed MAREK.md items to `_archive/MAREK_DONE_[YYYY-MM].md`
-4. Report what was archived
+**Step 1: Token Budget Check**
+Run word count to assess documentation load:
+```bash
+wc -w *.md
+```
+
+Evaluate health:
+- ✅ **Good:** Total <10,000 words, no single file >3,000 words
+- ⚠️ **Warning:** Total 10,000-15,000 words, or any file >3,000 words
+- 🚨 **Critical:** Total >15,000 words, or any file >5,000 words
+
+**Step 2: Scan File Sizes**
+Flag files exceeding thresholds:
+- `PROGRESS.md`: > 30KB or > 10 sessions
+- `TODO.md`: > 100 items
+- `MAREK.md`: > 50 items
+- Any `.md` file: > 3,000 words
+
+**Step 3: Apply "Next Session Test"**
+For each flagged file, review sections:
+- **Keep:** Would Claude need this next session?
+  - Active tasks, current constraints, technical reference
+- **Archive:** Historical narrative, completed research, "how we learned X"
+
+**Step 4: Archive**
+- PROGRESS.md entries > 30 days → `_archive/PROGRESS_[YYYY-MM].md`
+- Completed TODO items → `_archive/TODO_DONE_[YYYY-MM].md`
+- Completed MAREK.md items → `_archive/MAREK_DONE_[YYYY-MM].md`
+- Historical content from CLAUDE.md → `_archive/` as appropriate
+
+**Step 5: Extract Principles (if applicable)**
+If project has >5 completed tasks and no PRINCIPLES.md exists:
+- Create PRINCIPLES.md from recurring patterns
+- Distill delegation and process principles
+
+**Step 6: Report**
+```
+"🗑️ Archived [X] KB. Active context now [Y] KB.
+
+Health: [Good ✅ / Warning ⚠️ / Critical 🚨]
+
+- Total words: [N]
+- Files flagged: [list]
+- Sessions in PROGRESS.md: [N]
+
+[Optional: Suggest next hygiene date]"
+```
+
+**When to Run:**
+- **Proactive:** Monthly check (first Monday)
+- **Reactive:** After major project milestones
+- **Emergency:** When context loading feels sluggish
+- **Critical:** When token budget check shows 🚨 Critical
 
 ---
 
@@ -876,7 +925,8 @@ Document tool-specific quirks and workarounds here.
 ```
 [PROJECT_NAME]/
 ├── CLAUDE.md      # Technical reference + protocol (this file)
-├── PERSONA.md     # Your preferences and signals (NEW)
+├── PERSONA.md     # Your preferences and signals
+├── PRINCIPLES.md  # Distilled wisdom from decisions (NEW in v2.2)
 ├── TODO.md        # Prioritized task list (with AC)
 ├── PROGRESS.md    # Session-by-session log
 ├── MAREK.md       # Human-only tasks (rename to your name)

@@ -22,6 +22,14 @@ Use **duo** ([protocol-duo](https://github.com/marekgorski/protocol-duo)) for co
 
 ---
 
+## What's New in v2.2: Hygiene & Principles
+
+**Token budget monitoring** — Enhanced `..hygiene` command with health checks, "Next Session Test", and automated thresholds.
+
+**PRINCIPLES.md template** — Distill recurring patterns from completed work into a <2 minute read.
+
+---
+
 ## What's New in v2.1: Personas
 
 uno now includes a **personalization layer**. During onboarding, AI asks what you care about, what signals matter, and what to filter out. This creates `PERSONA.md` — your AI's training data.
@@ -197,6 +205,7 @@ Four files. That's all you need for persistent, personalized delegation.
 
 ## Changelog
 
+- **v2.2** (Jan 16, 2026): Added PRINCIPLES.md template, enhanced `..hygiene` with token budget monitoring (propagated from duo v1.4)
 - **v2.1** (Jan 14, 2026): Added persona layer — personalized briefings via PERSONA.md configuration
 - **v2.0** (Jan 2, 2026): uno/pa validated with australia-trip implementation, refined NOTES.md template with research tables
 - **v2.0** (Jan 1, 2026): Rebranded to uno, added extension system (ea, pa, km), extension-aware `..start`
@@ -212,4 +221,4 @@ MIT — Use freely, modify as needed.
 
 ---
 
-*protocol-uno v2.1 — January 14, 2026*
+*protocol-uno v2.2 — January 16, 2026*
