@@ -218,6 +218,28 @@ This protocol is actively used across multiple projects spanning all three exten
 
 ---
 
+## Graduation: From Jet Ski to Direct Intent
+
+Most people start by building "jet skis" — exploring what AI can do, learning the rhythm of delegation. That's what this template is for.
+
+At some point, you'll stop asking "what can I build?" and start asking "what should I build and why?" That's the graduation signal.
+
+When you're ready, add `INITIATIVES.md` to your project root — a strategic layer above your existing files:
+
+| Level | What | Files | When |
+|-------|------|-------|------|
+| **1. Initiative Tracker** | Why, what, who, when | INITIATIVES.md | After you've shipped something real |
+| 2. Phase Tracker | Progress, priorities | TODO.md + TASKS/ | Day 1 |
+| 3. Daily Work | Tasks, commits | TASKS/ + git | Day 1 |
+
+The Level 1 template asks 6 questions per initiative: **Why**, **Which Models**, **What Revenue**, **How to Measure**, **Who's Building**, **When** (milestones + biggest risk).
+
+Don't add it on day one — build first, direct later.
+
+**Learn more:** [The 4 Levels](https://kayg.ee/learn/levels) — full guide with working example.
+
+---
+
 ## Contributing
 
 Evolved the protocol? We'd love to hear about it. See [CONTRIBUTING.md](CONTRIBUTING.md) or submit to [kayg.ee/protocol/upstream](https://kayg.ee/protocol/upstream).
