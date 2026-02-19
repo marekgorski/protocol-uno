@@ -411,7 +411,7 @@ Ready to work."
 
 ---
 
-### Atomic RECORD Step (Replaces ..end)
+### Atomic RECORD Step
 
 **The RECORD step runs automatically after every EXECUTE.** This is not a command — it's built into the atomic interaction cycle.
 
