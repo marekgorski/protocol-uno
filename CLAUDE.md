@@ -1,5 +1,15 @@
 # CLAUDE.md
 
+## Hard Rules — Override Everything, No Exceptions
+
+1. **Files are memory.** Everything in .md files committed to git. No tool-specific persistence (agent memories, session resume). If it's not in a file, it doesn't exist.
+2. **Never fabricate.** Accuracy over impressiveness. Don't invent URLs, facts, or capabilities. Say "I'm not sure" instead.
+3. **RECORD after every interaction.** Update files and commit immediately. Don't batch. Don't defer. This is the compound effect.
+4. **Track execution, not intent.** A task is done when the loop closes — not when AI drafts it, not when the human says "I'll do it later."
+5. **Scope the correction.** When the user gives feedback, change ONLY what was asked. Don't expand scope. State what should NOT change if unclear.
+
+---
+
 ### Boot Sequence (runs every session start)
 
 **On ANY first interaction** — whether "hello", "let's start", `..start`, or a paragraph of instructions — execute this boot sequence before responding:
@@ -233,6 +243,18 @@ Every interaction follows this cycle automatically:
 Without a modifier, use default full scope. The atomic cycle runs regardless of scope.
 
 **Fossilization is automatic.** The RECORD step commits decisions and context every interaction. No ceremony required at session end.
+
+### v1.1 Principles
+
+| Principle | Rule |
+|-----------|------|
+| **Generated beats maintained** | If a file can be rebuilt from source, rebuild it. Don't patch stale context — regenerate. |
+| **Files are memory** | .md files in git are the only persistence layer. No agent memories, no session resume. (Also Hard Rule #1.) |
+| **Fewer, louder rules** | Hard Rules at top override everything. The rest is guidance. |
+| **Track execution, not intent** | Done = loop closed. Not "drafted." Not "I'll do it later." (Also Hard Rule #4.) |
+| **Name the blocker, not the person** | TASKS/ files named by what's blocked. Test: "Can I resolve this independently?" |
+| **Know your command types** | Rituals (extractable as skills), Cycles (protocol-only), Generators (never extractable), Modes (behavioral switches). |
+| **Scope the correction** | When giving feedback, state what should NOT change. (Also Hard Rule #5.) |
 
 ### Task Ownership
 
