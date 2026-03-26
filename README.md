@@ -1,6 +1,6 @@
 # uno — Delegate Protocol
 
-**Version 1.0** — AI works FOR you.
+**Version 1.1** — AI works FOR you.
 
 A template for AI-assisted delegation. Part of the [KayGee Protocol Family](https://kayg.ee/protocol).
 
@@ -207,6 +207,14 @@ This protocol is actively used across multiple projects spanning all three exten
 
 ## Changelog
 
+- **v1.1** (Mar 26, 2026): Eight Principles From 90 Days
+  - Eight principles extracted from 90 days of production use — each earned by a specific failure or validated by measurable improvement
+  - Hard Rules hierarchy: 3-5 inviolable rules at top of CLAUDE.md, structurally separate from guidance
+  - Voice initialization: first-boot calibration questions that seed your communication style. Refines from corrections over weeks. The seed accelerates — it doesn't replace organic learning
+  - Command type classification: Rituals, Cycles, Generators, Modes
+  - Backwards compatible with v1.0 — all changes are additive
+  - Downstream versioning convention: v{canonical}{letter} (e.g., v1.1a = synced to v1.1, plus local extensions)
+
 - **v1.0** (Jan 25, 2026): Official release of protocol-uno
   - Extension system: ea (Executive), pa (Personal), km (Knowledge)
   - Commands: `..start`, `..end`, `..hygiene`, `..gm`, `..gn`
@@ -252,4 +260,4 @@ MIT — Use freely, modify as needed.
 
 ---
 
-*protocol-uno v1.0 — January 25, 2026*
+*protocol-uno v1.1 — March 26, 2026*
