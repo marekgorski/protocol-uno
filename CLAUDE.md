@@ -177,14 +177,49 @@ Ask these one at a time:
    >
    > Examples: 'AI/ML', 'product management', 'industry news'"
 
-**Step 4: Populate Docs**
+**Step 4: Voice Calibration** (for ea/pa/km)
+
+After persona configuration, calibrate the user's communication voice. This seeds the voice profile — it won't be perfect on day one, but it's better than guessing from zero. The real voice emerges from corrections over weeks of use.
+
+**Scope in uno:** Voice applies to ALL outbound communications — email, Slack, status updates, escalations, stakeholder messages.
+
+Ask these as choices, not open-ended questions:
+
+1. **Tone**
+   > "Here are three ways to decline a meeting. Which sounds most like you?
+   > - A: 'I won't be able to make this one — can you send me the notes?'
+   > - B: 'Unfortunately I have a conflict. Could we reschedule?'
+   > - C: 'Can't do Thursday. What else works?'
+   > - Or tell me how you'd actually say it."
+
+2. **Formality**
+   > "When writing to someone senior, do you:
+   > - Keep the same tone (just clearer)
+   > - Dial up formality slightly
+   > - Switch to a noticeably more formal register"
+
+3. **Brevity**
+   > "For a typical status update, do you prefer:
+   > - Bullet points only (3-5 lines)
+   > - Short paragraph with context (5-8 lines)
+   > - Full narrative with reasoning"
+
+4. **Edges**
+   > "When pushing back or flagging a problem, do you:
+   > - Lead with the concern directly
+   > - Sandwich it (positive → concern → path forward)
+   > - Ask a question that surfaces the issue indirectly"
+
+Store the results in `PERSONA.md` under `## Voice Profile`. This is a seed — mark it as `Phase: Configured`. After ~30 days of corrections, it can be regenerated from accumulated evidence (Phase: Generated).
+
+**Step 5: Populate Docs**
 
 Once confirmed:
 
 1. **Create PERSONA.md** (if ea/pa/km selected — see template below)
 2. **Create extension files** (see Extension File Templates below)
 3. **Update core files:**
-   - `CLAUDE.md` — Replace placeholder sections, set protocol header to `uno/[ext] v1.0`
+   - `CLAUDE.md` — Replace placeholder sections, set protocol header to `uno/[ext] v1.1`
    - `TODO.md` — Create prioritized task list **with acceptance criteria**
    - `TASKS/` — Add any human-only tasks as task files
    - `PROGRESS.md` — Log this initialization session
@@ -192,7 +227,7 @@ Once confirmed:
 
 Remove all `[PLACEHOLDER]` markers when done.
 
-**Step 5: Confirm Ready**
+**Step 6: Confirm Ready**
 
 ```
 "Project initialized! Ready to work.
@@ -205,7 +240,7 @@ Your assistant is personalized to:
 Use `..start` to begin a session. I'll apply your preferences automatically."
 ```
 
-**Step 6: Commit & Push**
+**Step 7: Commit & Push**
 
 ```bash
 git add -A && git commit -m "Initialize project: [PROJECT_NAME]" && git push
@@ -213,7 +248,7 @@ git add -A && git commit -m "Initialize project: [PROJECT_NAME]" && git push
 
 ---
 
-## protocol-uno v1.0
+## protocol-uno v1.1
 
 This project uses the **uno** (Delegate) protocol — AI works FOR you.
 
@@ -255,6 +290,7 @@ Without a modifier, use default full scope. The atomic cycle runs regardless of 
 | **Name the blocker, not the person** | TASKS/ files named by what's blocked. Test: "Can I resolve this independently?" |
 | **Know your command types** | Rituals (extractable as skills), Cycles (protocol-only), Generators (never extractable), Modes (behavioral switches). |
 | **Scope the correction** | When giving feedback, state what should NOT change. (Also Hard Rule #5.) |
+| **Seed the voice, grow the style** | Initialize voice at first boot via calibration questions. Refine from corrections. Regenerate from evidence at ~30 days. The seed accelerates — it doesn't replace 90 days of learning. |
 
 ### Task Ownership
 
