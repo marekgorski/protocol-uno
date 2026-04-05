@@ -14,7 +14,7 @@
 
 **On ANY first interaction** — whether "hello", "let's start", `..start`, or a paragraph of instructions — execute this boot sequence before responding:
 
-1. **Read ALL `.md` files** in the project root (including PERSONA.md)
+1. **Read ALL `.md` files** in the project root (including PERSONA.md and ESSENCE.md)
 2. **Scan TASKS/ folder** — read all task files
 3. **Read last 20 git commits:** `git log --oneline -20`
 4. **Check git status:** `git status`
@@ -177,11 +177,26 @@ Ask these one at a time:
    >
    > Examples: 'AI/ML', 'product management', 'industry news'"
 
-**Step 4: Voice Calibration** (for ea/pa/km)
+**Step 4: Voice Identity** (for ea/pa/km)
 
-After persona configuration, calibrate the user's communication voice. This seeds the voice profile — it won't be perfect on day one, but it's better than guessing from zero. The real voice emerges from corrections over weeks of use.
+After persona configuration, discover the user's voice influences. These seed the ESSENCE.md file — the three-influence model that shapes how AI-generated content sounds.
 
-**Scope in uno:** Voice applies to ALL outbound communications — email, Slack, status updates, escalations, stakeholder messages.
+Ask these one at a time, conversationally:
+
+1. **Structure Influence**
+   > "Who writes and structures information in a way you admire? Someone whose writing makes complex things feel organized."
+
+2. **Clarity Influence**
+   > "Who writes in a way that creates clarity from information — makes obvious things obvious, reframes what everyone already knows?"
+
+3. **Voice Influence**
+   > "Who speaks in a way you admire their speaking? Someone whose tone or delivery you'd want this project to echo."
+
+After answers, populate ESSENCE.md with the three influences and initial craft rules derived from them. Mark as `Phase: Configured`.
+
+**Step 5: Voice Calibration** (for ea/pa/km)
+
+Now calibrate the specifics. This refines how the voice influences apply to outbound communications — email, Slack, status updates, escalations, stakeholder messages.
 
 Ask these as choices, not open-ended questions:
 
@@ -212,14 +227,15 @@ Ask these as choices, not open-ended questions:
 
 Store the results in `PERSONA.md` under `## Voice Profile`. This is a seed — mark it as `Phase: Configured`. After ~30 days of corrections, it can be regenerated from accumulated evidence (Phase: Generated).
 
-**Step 5: Populate Docs**
+**Step 6: Populate Docs**
 
 Once confirmed:
 
 1. **Create PERSONA.md** (if ea/pa/km selected — see template below)
 2. **Create extension files** (see Extension File Templates below)
 3. **Update core files:**
-   - `CLAUDE.md` — Replace placeholder sections, set protocol header to `uno/[ext] v1.1`
+   - `ESSENCE.md` — Populate with voice influences from Step 4
+   - `CLAUDE.md` — Replace placeholder sections, set protocol header to `uno/[ext] v1.2`
    - `TODO.md` — Create prioritized task list **with acceptance criteria**
    - `TASKS/` — Add any human-only tasks as task files
    - `PROGRESS.md` — Log this initialization session
@@ -227,20 +243,22 @@ Once confirmed:
 
 Remove all `[PLACEHOLDER]` markers when done.
 
-**Step 6: Confirm Ready**
+**Step 7: Confirm Ready**
 
 ```
 "Project initialized! Ready to work.
 
 Your assistant is personalized to:
+- Voice identity: [3 influences seeded in ESSENCE.md]
 - [Decision style / Planning style / Learning style]
 - Surface: [Signal watch items / Interests]
 - Filter out: [Noise filter items / Avoid items]
 
-Use `..start` to begin a session. I'll apply your preferences automatically."
+Use `..ss` to start a session. I'll load context and apply your preferences automatically.
+Use `..cs` to close a session. I'll fossilize context before ending."
 ```
 
-**Step 7: Commit & Push**
+**Step 8: Commit & Push**
 
 ```bash
 git add -A && git commit -m "Initialize project: [PROJECT_NAME]" && git push
@@ -248,7 +266,20 @@ git add -A && git commit -m "Initialize project: [PROJECT_NAME]" && git push
 
 ---
 
-## protocol-uno v1.1
+## Harness (Claude Code)
+
+This repo includes `.claude/settings.json` with hooks that mechanically enforce Hard Rules:
+
+| Hook | Enforces | What It Does |
+|---|---|---|
+| PreToolUse (Write/Edit) | #1: Files are memory | Blocks writes to `~/.claude/` — forces persistence into repo .md files |
+| Stop | #3: RECORD after every interaction | Blocks session end until TODO.md and PROGRESS.md are updated and committed |
+
+If you're not using Claude Code, these rules still apply — they're just enforced by instruction rather than structure.
+
+---
+
+## protocol-uno v1.2
 
 This project uses the **uno** (Delegate) protocol — AI works FOR you.
 
@@ -279,7 +310,7 @@ Without a modifier, use default full scope. The atomic cycle runs regardless of 
 
 **Fossilization is automatic.** The RECORD step commits decisions and context every interaction. No ceremony required at session end.
 
-### v1.1 Principles
+### v1.2 Principles
 
 | Principle | Rule |
 |-----------|------|
@@ -291,6 +322,8 @@ Without a modifier, use default full scope. The atomic cycle runs regardless of 
 | **Know your command types** | Rituals (extractable as skills), Cycles (protocol-only), Generators (never extractable), Modes (behavioral switches). |
 | **Scope the correction** | When giving feedback, state what should NOT change. (Also Hard Rule #5.) |
 | **Seed the voice, grow the style** | Initialize voice at first boot via calibration questions. Refine from corrections. Regenerate from evidence at ~30 days. The seed accelerates — it doesn't replace 90 days of learning. |
+| **Structure is the owner** | If you have to ask who owns it, the structure is wrong. Structure encodes three things: who acts (file location), when it's done (acceptance criteria at planning time), and who verifies (criteria exist before work starts). |
+| **Build the fence, not the net** | Prevent at the input what you'd otherwise catch at the output. Fences (Hard Rules, CONSTRAINTS.md, hooks) prevent bad output. Nets (review checklists) catch it after. Design fences first. |
 
 ### Task Ownership
 
@@ -317,16 +350,19 @@ Location encodes ownership — no markers needed:
 
 | Command | Purpose |
 |---------|---------|
-| `..start` | Load context, apply persona filters, show personalized briefing |
-| `..gm` | **Good morning** — Priorities, risks, DMs to send (ea extension) |
-| `..gn` | **Good night** — Deliverables check, commit, prep tomorrow (ea extension) |
+| `..ss` | **Start session** — Load context, apply persona filters, show personalized briefing |
+| `..cs` | **Close session** — Fossilize context: update TODO.md, PROGRESS.md, commit |
+| `..gm` | **Good morning** — Day-start review: priorities, risks, DMs to send (ea extension) |
+| `..gn` | **Good night** — Day-end review: deliverables check, prep tomorrow (ea extension) |
 | `..hygiene` | Archive old entries when files grow large |
 
-The `..gn` command (ea extension) serves as a day-boundary checkpoint.
+`..start` is an alias for `..ss`. `..ss` / `..cs` are the universal session commands. `..gm` / `..gn` are ea extension day-boundary rituals.
 
 ---
 
-### `..start`
+### `..ss` (Start Session)
+
+**Alias:** `..start`
 
 **Base behavior (all extensions):**
 1. Read all .md files including PERSONA.md
@@ -632,6 +668,39 @@ What should we do?"
 
 ---
 
+### `..cs` (Close Session)
+
+**When to use:** End of any session, any extension. Universal session close.
+
+**Purpose:** Fossilize context so the next session picks up where this one left off.
+
+**Behavior:**
+1. **Verify tasks** — Check acceptance criteria for tasks worked on
+   - AC met → mark `[x]` in TODO.md or move to TASKS/DONE/
+   - AC not met → note what's missing, don't mark complete
+2. **Update TODO.md** — Mark completed tasks, add any new tasks discovered
+3. **Update PROGRESS.md** — Add session entry (newest at top): what was done, files changed, decisions made
+4. **Commit and push** — `git add -A && git commit -m "docs: [summary]" && git push`
+
+**Response format:**
+```
+"Session closed.
+
+**Completed:**
+- [x] [Task] — AC verified ✅
+
+**New tasks discovered:**
+- [ ] [Task]
+
+**Progress logged.** Committed: [hash]
+
+Next session: run `..ss` to pick up where we left off."
+```
+
+**Relationship to `..gn`:** `..cs` is the universal close — any extension, any time. `..gn` (ea extension) adds day-boundary checks (deliverables, stakeholders, tomorrow's prep) on top of the `..cs` core. If you run `..gn`, it includes `..cs` behavior automatically.
+
+---
+
 ### `..hygiene`
 
 **Context Garbage Collection**
@@ -693,6 +762,21 @@ Health: [Good ✅ / Warning ⚠️ / Critical 🚨]
 - **Reactive:** After major project milestones
 - **Emergency:** When context loading feels sluggish
 - **Critical:** When token budget check shows 🚨 Critical
+
+---
+
+## ESSENCE.md
+
+Per-repo voice identity file. Created during onboarding from the three voice influence questions (Step 4). Starts with placeholder content — the voice is earned from corrections, not templated.
+
+**Minimum sections:** Voice (three influences + craft rules), Traits, What I don't do, Anti-patterns.
+
+**Additional sections** (How I work, How I communicate, etc.) are added as the repo's voice matures. Only add sections that are earned from production use.
+
+**Lifecycle:**
+- **Phase: Configured** — Seeded from onboarding questions
+- **Phase: Refined** — Updated from corrections over 1-30 days
+- **Phase: Generated** — Regenerated from accumulated evidence at ~30 days
 
 ---
 
