@@ -1,6 +1,6 @@
 # uno — Delegate Protocol
 
-**Version 1.1** — AI works FOR you.
+**Version 1.2.1** — AI works FOR you.
 
 A template for AI-assisted delegation. Part of the [KayGee Protocol Family](https://kayg.ee/protocol).
 
@@ -272,4 +272,4 @@ MIT — Use freely, modify as needed.
 
 ---
 
-*protocol-uno v1.1 — March 26, 2026*
+*protocol-uno v1.2.1 — April 6, 2026*
