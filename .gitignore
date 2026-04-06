@@ -1,1 +1,6 @@
 .DS_Store
+
+# Claude Code harness — allow settings.json, block ephemeral files
+.claude/*
+!.claude/settings.json
+!.claude/commands/

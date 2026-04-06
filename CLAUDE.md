@@ -12,7 +12,7 @@
 
 ### Boot Sequence (runs every session start)
 
-**On ANY first interaction** — whether "hello", "let's start", `..start`, or a paragraph of instructions — execute this boot sequence before responding:
+**On ANY first interaction** — whether "hello", "let's start", `..gm`, or a paragraph of instructions — execute this boot sequence before responding:
 
 1. **Read ALL `.md` files** in the project root (including PERSONA.md and ESSENCE.md)
 2. **Scan TASKS/ folder** — read all task files
@@ -254,7 +254,7 @@ Your assistant is personalized to:
 - Surface: [Signal watch items / Interests]
 - Filter out: [Noise filter items / Avoid items]
 
-Use `..ss` to start a session. I'll load context and apply your preferences automatically.
+Use `..gm` to get a status briefing. I'll show priorities, risks, and what needs attention.
 Use `..cs` to close a session. I'll fossilize context before ending."
 ```
 
@@ -272,14 +272,15 @@ This repo includes `.claude/settings.json` with hooks that mechanically enforce 
 
 | Hook | Enforces | What It Does |
 |---|---|---|
+| SessionStart | Boot sequence | Records session HEAD, injects boot sequence reminder — ensures context is loaded before first response |
 | PreToolUse (Write/Edit) | #1: Files are memory | Blocks writes to `~/.claude/` — forces persistence into repo .md files |
-| Stop | #3: RECORD after every interaction | Blocks session end until TODO.md and PROGRESS.md are updated and committed |
+| Stop | #3: RECORD after every interaction | Blocks session end if changes were made but TODO.md and PROGRESS.md were not updated. Read-only sessions pass silently. |
 
 If you're not using Claude Code, these rules still apply — they're just enforced by instruction rather than structure.
 
 ---
 
-## protocol-uno v1.2
+## protocol-uno v1.2.1
 
 This project uses the **uno** (Delegate) protocol — AI works FOR you.
 
@@ -334,7 +335,7 @@ Location encodes ownership — no markers needed:
 | **TODO.md** | Claude | AI tasks — work Claude does |
 | **TASKS/** | Human | Tasks only a human can do |
 
-**Handoff pattern:** When Claude prepares something a human must execute (e.g., a draft to review and send), Claude creates the deliverable and adds a task file in `TASKS/PRIORITY/` pointing to it. When a human makes a decision that unblocks AI work, they add the outcome to the task file in `TASKS/DONE/` and Claude picks up dependent work on next `..start`.
+**Handoff pattern:** When Claude prepares something a human must execute (e.g., a draft to review and send), Claude creates the deliverable and adds a task file in `TASKS/PRIORITY/` pointing to it. When a human makes a decision that unblocks AI work, they add the outcome to the task file in `TASKS/DONE/` and Claude picks up dependent work on next session (boot sequence loads context automatically).
 
 ---
 
@@ -350,27 +351,27 @@ Location encodes ownership — no markers needed:
 
 | Command | Purpose |
 |---------|---------|
-| `..ss` | **Start session** — Load context, apply persona filters, show personalized briefing |
+| `..gm` | **Status briefing** — Priorities, risks, blockers, task status (on demand) |
 | `..cs` | **Close session** — Fossilize context: update TODO.md, PROGRESS.md, commit |
-| `..gm` | **Good morning** — Day-start review: priorities, risks, DMs to send (ea extension) |
 | `..gn` | **Good night** — Day-end review: deliverables check, prep tomorrow (ea extension) |
 | `..hygiene` | Archive old entries when files grow large |
 
-`..start` is an alias for `..ss`. `..ss` / `..cs` are the universal session commands. `..gm` / `..gn` are ea extension day-boundary rituals.
+Boot sequence runs automatically via SessionStart hook — no manual start command needed. `..gm` is on-demand ("brief me"). `..cs` closes any session. `..gn` (ea extension) adds day-boundary checks on top of `..cs`.
 
 ---
 
-### `..ss` (Start Session)
+### `..gm` (Status Briefing)
 
-**Alias:** `..start`
+**When to use:** Any time you want a status update. Start of day, start of session, or on demand.
+
+**Note:** The SessionStart hook already loads all context automatically. `..gm` adds the human-facing briefing on top — priorities, risks, what needs attention.
 
 **Base behavior (all extensions):**
-1. Read all .md files including PERSONA.md
-2. Check TASKS/DONE/ for completed human tasks that unblock work
-3. Flag stale human tasks in TASKS/ (>7 days)
-4. Apply persona filters to all output
-5. **If TASKS/ exists:** Scan TASKS/PRIORITY/ first, then TASKS/TODO/, report blocked count
-6. **If TODO.md exists:** Report top priority task (with acceptance criteria)
+1. Check TASKS/DONE/ for completed human tasks that unblock work
+2. Flag stale human tasks in TASKS/ (>7 days)
+3. Apply persona filters to all output
+4. **If TASKS/ exists:** Scan TASKS/PRIORITY/ first, then TASKS/TODO/, report blocked count
+5. **If TODO.md exists:** Report top priority task (with acceptance criteria)
 
 **TASKS/ status report (if using TASKS/ folder):**
 ```
@@ -552,47 +553,6 @@ Options:
 
 ---
 
-### `..gm` (Good Morning — ea extension)
-
-**When to use:** Start of workday with uno/ea extension
-
-**Purpose:** Morning briefing focused on today's execution
-
-**Behavior:**
-1. Read all .md files (PERSONA, NEWSFEED, TODO, PROGRESS, TASKS/, stakeholders/*)
-2. Check NEWSFEED.md for yesterday's context
-3. Check TASKS/ for completed tasks that unblock work
-4. Surface today's priorities (filtered by PERSONA.md)
-5. Flag risks and blockers
-6. Suggest DMs to send (from stakeholders/ files or TASKS/ drafts)
-
-**Response format:**
-```
-"## Good Morning — [Date] — Day [N/90 or T-N]
-
-**Yesterday's Context:**
-[1-2 sentence summary from NEWSFEED.md]
-
-**Today's Priorities:**
-1. **[Task]** — [Why it matters] — [Estimated effort]
-2. **[Task]** — [Why it matters] — [Estimated effort]
-3. **[Task]** — [Why it matters] — [Estimated effort]
-
-**Risks to Watch:**
-⚠️ **[Risk]:** [Why it matters] — [From PERSONA Signal Watch]
-
-**DMs to Send:**
-- **[Person]** → [Draft ready in TASKS/]
-- **[Person]** → [Need to follow up on [topic]]
-
-**Blockers:**
-- [Blocker] → Waiting on [who/what]
-
-**Ready to start with #1?**"
-```
-
----
-
 ### `..gn` (Good Night — ea extension)
 
 **When to use:** End of workday with uno/ea extension
@@ -614,7 +574,7 @@ Options:
    - Signals detected (from PERSONA.md)
 5. **Update PROGRESS.md** — Add session entry (newest at top)
 6. **Commit and push** — `git add -A && git commit -m "docs: [summary]" && git push`
-7. **Prep tomorrow** — Set top 3 priorities for ..gm
+7. **Prep tomorrow** — Set top 3 priorities for next `..gm`
 
 **Response format:**
 ```
@@ -694,7 +654,7 @@ What should we do?"
 
 **Progress logged.** Committed: [hash]
 
-Next session: run `..ss` to pick up where we left off."
+Next session: run `..gm` for a status briefing."
 ```
 
 **Relationship to `..gn`:** `..cs` is the universal close — any extension, any time. `..gn` (ea extension) adds day-boundary checks (deliverables, stakeholders, tomorrow's prep) on top of the `..cs` core. If you run `..gn`, it includes `..cs` behavior automatically.
@@ -1310,7 +1270,7 @@ I'll update BOOKINGS.md and mark this complete.
 
 ### Claude's Responsibilities for TASKS/
 
-Each `..start` session, Claude:
+Each session, Claude:
 
 1. **Reviews all TASKS/ files** against current context
 2. **Moves files** between folders as situation changes:
@@ -1338,7 +1298,7 @@ When the user completes a task:
 
 | Command | Behavior |
 |---------|----------|
-| `..start` | Reviews TASKS/, reprioritizes, reports status |
+| `..gm` | Reviews TASKS/, reprioritizes, reports status |
 | `..end` | Moves completed tasks to DONE/, logs in PROGRESS.md |
 | `..hygiene` | Consolidates DONE/ into monthly archive |
 
@@ -1375,7 +1335,7 @@ When the user completes a task:
 2. Include: context, recommendation, "The Ask", "What Happens Next"
 3. Note in PROGRESS.md
 
-### Claude reprioritizing tasks (each ..start)
+### Claude reprioritizing tasks (each session)
 1. Review all TASKS/ files against current context
 2. Move between folders as situation changes
 3. Report status in briefing
@@ -1503,7 +1463,7 @@ When absorbing new information, **always check relevant files before updating:**
 | AI work in TASKS/ or human work in TODO.md | Wrong owner, task stuck or wasted effort | TODO.md = AI work, TASKS/ = human work |
 | Human task without blocker note | Unclear what's waiting | Note "Blocks: X" in task file |
 | Skipping RECORD step | Docs out of sync | Atomic cycle makes RECORD automatic |
-| Stale human tasks | Work stuck indefinitely | `..start` flags >7 days |
+| Stale human tasks | Work stuck indefinitely | `..gm` flags >7 days |
 | Skipping persona setup | Generic output, missed signals | Take 5 min to configure |
 | Never updating persona | Stale preferences | Refine as you learn |
 | **Friday scrambles** | **Weekly updates done retrospectively** | **Build deliverables daily (..gn check)** |
