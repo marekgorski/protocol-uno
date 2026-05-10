@@ -1,6 +1,6 @@
 # uno — Delegate Protocol
 
-**Version 1.2.1** — AI works FOR you.
+**Version 1.2.2** — AI works FOR you.
 
 A template for AI-assisted delegation. Part of the [KayGee Protocol Family](https://kayg.ee/protocol).
 
@@ -207,6 +207,13 @@ This protocol is actively used across multiple projects spanning all three exten
 
 ## Changelog
 
+- **v1.2.2** (May 10, 2026): Coaching Philosophy
+  - Stop hook simplified — catches uncommitted changes only; PROGRESS/TODO diff policing removed
+  - Coaching framing: hooks coach the playbook (remind, catch drift); they don't enforce or punish
+  - Hard Rule #3 scoped to substantive interactions — quick read-only checks don't require RECORD entries
+  - Two new anti-patterns: hooks as taskmasters; concurrent sessions without isolation
+  - Production evidence: 29 days clean on a simplified hook in one production deployment; another ran hookless cleanly
+
 - **v1.2.1** (Apr 6, 2026): Hook Architecture Fix
   - SessionStart hook: records session HEAD, enforces boot sequence via `additionalContext`
   - PreToolUse widened: blocks all `~/.claude/` writes, not just two subdirectories
@@ -272,4 +279,4 @@ MIT — Use freely, modify as needed.
 
 ---
 
-*protocol-uno v1.2.1 — April 6, 2026*
+*protocol-uno v1.2.2 — May 10, 2026*

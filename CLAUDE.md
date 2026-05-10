@@ -4,7 +4,7 @@
 
 1. **Files are memory.** Everything in .md files committed to git. No tool-specific persistence (agent memories, session resume). If it's not in a file, it doesn't exist.
 2. **Never fabricate.** Accuracy over impressiveness. Don't invent URLs, facts, or capabilities. Say "I'm not sure" instead.
-3. **RECORD after every interaction.** Update files and commit immediately. Don't batch. Don't defer. This is the compound effect.
+3. **RECORD after every substantive interaction.** Update files and commit when work produces changes worth capturing. Quick read-only checks and context loads do not require RECORD entries. Don't batch substantive work. This is the compound effect.
 4. **Track execution, not intent.** A task is done when the loop closes — not when AI drafts it, not when the human says "I'll do it later."
 5. **Scope the correction.** When the user gives feedback, change ONLY what was asked. Don't expand scope. State what should NOT change if unclear.
 
@@ -268,19 +268,19 @@ git add -A && git commit -m "Initialize project: [PROJECT_NAME]" && git push
 
 ## Harness (Claude Code)
 
-This repo includes `.claude/settings.json` with hooks that mechanically enforce Hard Rules:
+This repo includes `.claude/settings.json` with hooks that coach the playbook — they remind, catch drift, and never punish:
 
-| Hook | Enforces | What It Does |
+| Hook | Coaching behaviour | What It Does |
 |---|---|---|
-| SessionStart | Boot sequence | Records session HEAD, injects boot sequence reminder — ensures context is loaded before first response |
-| PreToolUse (Write/Edit) | #1: Files are memory | Blocks writes to `~/.claude/` — forces persistence into repo .md files |
-| Stop | #3: RECORD after every interaction | Blocks session end if changes were made but TODO.md and PROGRESS.md were not updated. Read-only sessions pass silently. |
+| SessionStart | Loads your context | Records session HEAD, injects boot sequence reminder — ensures context is loaded before first response |
+| PreToolUse (Write/Edit) | Keeps your memory in the repo | Blocks writes to `~/.claude/` — forces persistence into repo .md files |
+| Stop | Unsaved work guard | Reminds you to commit before ending — catches uncommitted changes |
 
-If you're not using Claude Code, these rules still apply — they're just enforced by instruction rather than structure.
+The playbook works without the coach (any LLM can read .md files). The coach makes it consistent in Claude Code.
 
 ---
 
-## protocol-uno v1.2.1
+## protocol-uno v1.2.2
 
 This project uses the **uno** (Delegate) protocol — AI works FOR you.
 
@@ -309,7 +309,7 @@ Every interaction follows this cycle automatically:
 
 Without a modifier, use default full scope. The atomic cycle runs regardless of scope.
 
-**Fossilization is automatic.** The RECORD step commits decisions and context every interaction. No ceremony required at session end.
+**Fossilisation is automatic.** The RECORD step commits decisions and context after every substantive interaction. No ceremony required at session end.
 
 ### v1.2 Principles
 
@@ -1473,6 +1473,8 @@ When absorbing new information, **always check relevant files before updating:**
 | **Stakeholder amnesia** | **Lost relationship intelligence** | **Update stakeholders/ files after every interaction** |
 | **Arbitrary file dumps** | **Lost single source of truth** | **Check all .md files before updating** |
 | **Batching commits at session end** | **PROGRESS not updated, TODO not cleaned, context lost** | **Atomic RECORD commits after every interaction — no batching** |
+| **Hooks as taskmasters** | Per-interaction policing creates overhead exceeding value. Punishment causes resistance. | Hooks coach (remind, catch drift). They don't punish. PreToolUse memory guard = correct coach. Stop hook policing TODO/PROGRESS diffs = incorrect taskmaster. |
+| **Concurrent sessions without isolation** | One session's writes block another session's Stop hook. | Designate one session read-only, or use `isolation: "worktree"` for write-capable subagents. |
 
 ---
 
