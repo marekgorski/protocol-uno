@@ -1,28 +1,30 @@
-# uno — Delegate Protocol
+# uno — Operate Protocol
 
-**Version 1.2.2** — AI works FOR you.
+**Version 1.3** — OS for managing X.
 
-A template for AI-assisted delegation. Part of the [KayGee Protocol Family](https://kayg.ee/protocol).
+A template for AI-assisted operate-mode work — an OS for managing X (defined at repo init), as the substrate for ongoing life-management. Part of the [KayGee Protocol Family](https://kayg.ee/protocol).
 
 ---
 
 ## The Protocol Family
 
 ```
-uno (Delegate)          duo (Collaborate)       tre (Automate)
-AI works FOR you        AI works WITH you       AI works AMONG systems
+uno (Operate)           duo (Construct)         tre (Automate)
+OS for managing X       Construction site       Multi-party orchestration
 ├── /ea (Executive)     └── /ab (Arch+Build)    ├── /qa (Quality)
 ├── /pa (Personal)                              ├── /rm (Risk)
 └── /km (Knowledge)                             └── /cs (Customer)
 ```
 
-**uno** is for clear delegation: you define WHAT, AI handles HOW.
+**uno** is the Operate flavour — an ale in the kaygee brewery. Top-fermented, monolithic CLAUDE.md, OS-spec shape, ongoing substrate. Domain-shaped daemons (ea, pa, km) brewed onto the same base.
 
-Use **duo** ([protocol-duo](https://github.com/marekgorski/protocol-duo)) for code projects needing architect/builder separation.
+Use **duo** ([protocol-duo](https://github.com/marekgorski/protocol-duo)) — a lager — for bounded construction projects with architect/builder separation.
+
+> **v1.3 — Structural Discipline (2026-05-18):** The locus of discipline moves from rules+hook-enforcement to structure that makes failure modes hard to occur. Five layers move together: rule creation (case-study gate) · schema (front-matter `type/updated/summary`) · harness (hookless default) · falsification (watch public commitments) · release-candidate path. Plus protocol-vs-flavour stratification (the brewery and the recipe). See [kayg.ee/learn/structural-discipline](https://kayg.ee/learn/structural-discipline) for the full articulation.
 
 ---
 
-## What's in v1.0
+## What's in uno
 
 **Commands:**
 - `..start` — Load context, show priorities
@@ -207,6 +209,18 @@ This protocol is actively used across multiple projects spanning all three exten
 
 ## Changelog
 
+- **v1.3** (May 18, 2026): Structural Discipline
+  - Theme: locus of discipline moves from rules+hook-enforcement → structure that makes failure modes hard to occur
+  - New Hard Rule #6: Case-study gate at rule-creation (every new rule cites a case study AND a level designation)
+  - Front-matter schema migrated to `type/updated/summary` with 60-day compat shim (2026-05-18 → 2026-07-17)
+  - Hookless `{ "hooks": {} }` becomes canonical default; simplified Stop hook is opt-in
+  - Anti-pattern table format adds Case Study column (Hard Rule #6 enforcement)
+  - New anti-pattern: "Celebrating a primitive by over-implementing it" (case study: v1.2 hook deployment → v1.3 hookless retirement, ~10 weeks)
+  - Protocol-vs-flavour stratification codified (the brewery and the recipe — uno is the ale; duo is the lager)
+  - New "Flavour-Specific Rules" section (empty for uno in v1.3 — Operate flavour adds no flavour-level rules this release)
+  - Public articulation: kayg.ee/learn/structural-discipline (live 2026-05-17 ahead of canonical)
+  - Deferred for v1.3.1+: convergence/accretion ratio (Item 6, baseline 2026-06-30), mandatory front-matter (Item 9, paired with schema), /goal as Hard Rule (Item 10, testing window through 2026-06-15), PROGRESS rolling cadence (Item 11), anti-pattern table consolidation (Item 12)
+
 - **v1.2.2** (May 10, 2026): Coaching Philosophy
   - Stop hook simplified — catches uncommitted changes only; PROGRESS/TODO diff policing removed
   - Coaching framing: hooks coach the playbook (remind, catch drift); they don't enforce or punish
@@ -279,4 +293,4 @@ MIT — Use freely, modify as needed.
 
 ---
 
-*protocol-uno v1.2.2 — May 10, 2026*
+*protocol-uno v1.3 — May 18, 2026*

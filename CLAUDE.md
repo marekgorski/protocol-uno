@@ -2,11 +2,20 @@
 
 ## Hard Rules — Override Everything, No Exceptions
 
+> **All Hard Rules below are protocol-level** (apply across every flavour in the kaygee family — uno, duo, tre). Flavour-level rules specific to uno (Operate) live in the *"Flavour-Specific Rules"* section below. See the kaygee protocol family overview at [kayg.ee/protocol](https://kayg.ee/protocol) for the brewery-and-recipe stratification (v1.3, 2026-05-18).
+
 1. **Files are memory.** Everything in .md files committed to git. No tool-specific persistence (agent memories, session resume). If it's not in a file, it doesn't exist.
 2. **Never fabricate.** Accuracy over impressiveness. Don't invent URLs, facts, or capabilities. Say "I'm not sure" instead.
 3. **RECORD after every substantive interaction.** Update files and commit when work produces changes worth capturing. Quick read-only checks and context loads do not require RECORD entries. Don't batch substantive work. This is the compound effect.
 4. **Track execution, not intent.** A task is done when the loop closes — not when AI drafts it, not when the human says "I'll do it later."
 5. **Scope the correction.** When the user gives feedback, change ONLY what was asked. Don't expand scope. State what should NOT change if unclear.
+6. **Case-study gate at rule-creation (v1.3).** Every new rule, Hard Rule clause, anti-pattern row, or extension block must cite both a **case study** (a date-stamped incident, a numbered principle reference, or a named worked example) AND a **level designation** (protocol-level or flavour-level). Rules without both are deletion candidates at the next audit. Applies to new rules from 2026-05-18 forward; existing rules are not retroactively gated.
+
+---
+
+## Flavour-Specific Rules
+
+*This section is empty in v1.3 — the Operate flavour adds no flavour-specific Hard Rules beyond the protocol-level rules above. Future flavour-specific rules (specific to OS-mode operation) would land here. See the kaygee protocol family overview at [kayg.ee/protocol](https://kayg.ee/protocol) for the protocol-vs-flavour stratification.*
 
 ---
 
@@ -34,7 +43,7 @@ This is non-negotiable. CLAUDE.md is loaded automatically — this boot sequence
 
 **Step 0: Extension Selection**
 
-This is a **uno** (Delegate) protocol — AI works FOR you.
+This is a **uno** (Operate) protocol — an OS for managing X. The substrate for ongoing life-management; defined at repo init.
 
 Ask:
 
@@ -235,7 +244,7 @@ Once confirmed:
 2. **Create extension files** (see Extension File Templates below)
 3. **Update core files:**
    - `ESSENCE.md` — Populate with voice influences from Step 4
-   - `CLAUDE.md` — Replace placeholder sections, set protocol header to `uno/[ext] v1.2`
+   - `CLAUDE.md` — Replace placeholder sections, set protocol header to `uno/[ext] v1.3`
    - `TODO.md` — Create prioritized task list **with acceptance criteria**
    - `TASKS/` — Add any human-only tasks as task files
    - `PROGRESS.md` — Log this initialization session
@@ -268,25 +277,21 @@ git add -A && git commit -m "Initialize project: [PROJECT_NAME]" && git push
 
 ## Harness (Claude Code)
 
-This repo includes `.claude/settings.json` with hooks that coach the playbook — they remind, catch drift, and never punish:
+This repo ships hookless by default (v1.3, 2026-05-18). `.claude/settings.json` carries `{ "hooks": {} }` — the playbook (these .md files) does the protocol work; the harness stays out of the way.
 
-| Hook | Coaching behaviour | What It Does |
-|---|---|---|
-| SessionStart | Loads your context | Records session HEAD, injects boot sequence reminder — ensures context is loaded before first response |
-| PreToolUse (Write/Edit) | Keeps your memory in the repo | Blocks writes to `~/.claude/` — forces persistence into repo .md files |
-| Stop | Unsaved work guard | Reminds you to commit before ending — catches uncommitted changes |
+**Why hookless:** v1.2 shipped 3 hooks (SessionStart, PreToolUse, Stop) to all canonical repos. Two independent reports found per-interaction policing harmful (overhead > value). v1.2.2 simplified to a Stop-on-uncommitted-changes coach. v1.3 retires hooks as canonical default — a production deployment ran hookless cleanly through April–May 2026, proving the protocol works without them. The case-study gate (Hard Rule #6) now prevents future "celebrate the primitive by binding every lifecycle moment" failure modes.
 
-The playbook works without the coach (any LLM can read .md files). The coach makes it consistent in Claude Code.
+**Opt-in: simplified Stop hook.** If you want a commit nudge on session end, see the kaygee protocol family at [kayg.ee/protocol](https://kayg.ee/protocol) for the opt-in pattern documentation. The minimal binding: a Stop hook that blocks on uncommitted changes only. Don't bind SessionStart or PreToolUse unless you can name a specific protocol gap they fill.
 
 ---
 
-## protocol-uno v1.2.2
+## protocol-uno v1.3
 
-This project uses the **uno** (Delegate) protocol — AI works FOR you.
+This project uses the **uno** (Operate) protocol — an OS for managing X.
 
-**uno = Delegate:** You define WHAT, AI handles HOW.
+**uno = Operate:** OS for managing X (defined at repo init). The substrate for ongoing life-management. An ale in the kaygee brewery — top-fermented, monolithic CLAUDE.md, OS-spec shape, ongoing substrate. Domain-shaped daemons (ea, pa, km) brewed onto the same base.
 
-> Protocol source: [KayGee Protocol Family](https://kayg.ee/protocol)
+> Protocol family: [KayGee Protocol Family](https://kayg.ee/protocol) — uno (Operate, ale) · duo (Construct, lager) · tre (Automate, planned). Brewery (constants) + Recipe (flavour) = your protocol.
 
 ### Atomic Interaction Contract
 
@@ -1457,24 +1462,27 @@ When absorbing new information, **always check relevant files before updating:**
 
 ## Anti-Patterns to Avoid
 
-| Anti-Pattern | Consequence | Prevention |
-|--------------|-------------|------------|
-| TODO without AC | "Done" but incomplete | Always include AC |
-| AI work in TASKS/ or human work in TODO.md | Wrong owner, task stuck or wasted effort | TODO.md = AI work, TASKS/ = human work |
-| Human task without blocker note | Unclear what's waiting | Note "Blocks: X" in task file |
-| Skipping RECORD step | Docs out of sync | Atomic cycle makes RECORD automatic |
-| Stale human tasks | Work stuck indefinitely | `..gm` flags >7 days |
-| Skipping persona setup | Generic output, missed signals | Take 5 min to configure |
-| Never updating persona | Stale preferences | Refine as you learn |
-| **Friday scrambles** | **Weekly updates done retrospectively** | **Build deliverables daily (..gn check)** |
-| **Lazy linking** | **Links without context** | **Inline narrative, never orphaned URLs** |
-| **README bloat** | **Mixed static + dynamic** | **README=static, NEWSFEED=dynamic** |
-| **Assumed completeness** | **False confidence, missed context** | **Suggest tools proactively when uncertain** |
-| **Stakeholder amnesia** | **Lost relationship intelligence** | **Update stakeholders/ files after every interaction** |
-| **Arbitrary file dumps** | **Lost single source of truth** | **Check all .md files before updating** |
-| **Batching commits at session end** | **PROGRESS not updated, TODO not cleaned, context lost** | **Atomic RECORD commits after every interaction — no batching** |
-| **Hooks as taskmasters** | Per-interaction policing creates overhead exceeding value. Punishment causes resistance. | Hooks coach (remind, catch drift). They don't punish. PreToolUse memory guard = correct coach. Stop hook policing TODO/PROGRESS diffs = incorrect taskmaster. |
-| **Concurrent sessions without isolation** | One session's writes block another session's Stop hook. | Designate one session read-only, or use `isolation: "worktree"` for write-capable subagents. |
+> **Case Study column** added v1.3 (2026-05-18) per Hard Rule #6 case-study gate. Existing rows may carry `—` pending audit-time backfill; new rows from 2026-05-18 forward require a date-stamped case study at row-creation moment.
+
+| Anti-Pattern | Consequence | Prevention | Case Study |
+|--------------|-------------|------------|------------|
+| TODO without AC | "Done" but incomplete | Always include AC | — |
+| AI work in TASKS/ or human work in TODO.md | Wrong owner, task stuck or wasted effort | TODO.md = AI work, TASKS/ = human work | — |
+| Human task without blocker note | Unclear what's waiting | Note "Blocks: X" in task file | — |
+| Skipping RECORD step | Docs out of sync | Atomic cycle makes RECORD automatic | — |
+| Stale human tasks | Work stuck indefinitely | `..gm` flags >7 days | — |
+| Skipping persona setup | Generic output, missed signals | Take 5 min to configure | — |
+| Never updating persona | Stale preferences | Refine as you learn | — |
+| **Friday scrambles** | **Weekly updates done retrospectively** | **Build deliverables daily (..gn check)** | — |
+| **Lazy linking** | **Links without context** | **Inline narrative, never orphaned URLs** | — |
+| **README bloat** | **Mixed static + dynamic** | **README=static, NEWSFEED=dynamic** | — |
+| **Assumed completeness** | **False confidence, missed context** | **Suggest tools proactively when uncertain** | — |
+| **Stakeholder amnesia** | **Lost relationship intelligence** | **Update stakeholders/ files after every interaction** | — |
+| **Arbitrary file dumps** | **Lost single source of truth** | **Check all .md files before updating** | — |
+| **Batching commits at session end** | **PROGRESS not updated, TODO not cleaned, context lost** | **Atomic RECORD commits after every interaction — no batching** | — |
+| **Hooks as taskmasters** | Per-interaction policing creates overhead exceeding value. Punishment causes resistance. | Hooks coach (remind, catch drift). They don't punish. v1.3 retired hooks as canonical default — see Harness section. | 2026-04 two independent deployment reports → V1.2.2 simplified (2026-05-10) → v1.3 hookless (2026-05-18) |
+| **Concurrent sessions without isolation** | One session's writes block another session's Stop hook. | Designate one session read-only, or use `isolation: "worktree"` for write-capable subagents. | 2026-04-25 worktree boundary matrix codification |
+| **Celebrating a primitive by over-implementing it** (v1.3) | A new harness primitive ships → reflex is to bind every available lifecycle moment. Half the bindings stop getting used; the other half police every interaction. | Apply the case-study gate (Hard Rule #6) before binding any new harness primitive: name the protocol gap the binding fills. If you can't name the gap, don't bind it. | 2026-03 v1.2 hook deployment to all 10 repos (3 hooks bound; 6 lifecycle slots eventually used). Two independent reports found hooks-as-taskmasters failure mode. v1.2.2 simplified the surface (2026-05-10); v1.3 retired hooks as canonical default (2026-05-18). ~10 weeks celebration → correction. |
 
 ---
 
@@ -1580,4 +1588,4 @@ If this project has evolved the protocol in useful ways — new commands, anti-p
 
 ---
 
-*protocol-uno v1.0 — January 25, 2026*
+*protocol-uno v1.3 — May 18, 2026*
