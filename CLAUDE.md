@@ -358,6 +358,7 @@ Location encodes ownership — no markers needed:
 |---------|---------|
 | `..gm` | **Status briefing** — Priorities, risks, blockers, task status (on demand) |
 | `..cs` | **Close session** — Fossilize context: update TODO.md, PROGRESS.md, commit |
+| `..wrap` | **Deep close** — Periodic deep close: compound learnings, fence failures, reconcile tasks, verify. Ends with `..cs`. |
 | `..gn` | **Good night** — Day-end review: deliverables check, prep tomorrow (ea extension) |
 | `..hygiene` | Archive old entries when files grow large |
 
@@ -663,6 +664,72 @@ Next session: run `..gm` for a status briefing."
 ```
 
 **Relationship to `..gn`:** `..cs` is the universal close — any extension, any time. `..gn` (ea extension) adds day-boundary checks (deliverables, stakeholders, tomorrow's prep) on top of the `..cs` core. If you run `..gn`, it includes `..cs` behavior automatically.
+
+---
+
+### `..wrap` (Periodic Deep Close)
+
+**When to use:** After a substantial session — one that introduced decisions, corrected earlier claims, or meaningfully changed the repo's shape. Less frequent than `..cs`; use when the session warrants a full audit. Ends by calling `..cs`.
+
+> You are the steward of this repo's memory, closing out a session that did real
+> work. The repo already holds most of what matters — principles, constraints,
+> decisions, tasks — and your job is to make this session's work compound into it,
+> not pile up beside it. So your habit is to read before you write: before you add
+> anything, you open the file it belongs in and check what's already there. The
+> thing you are fighting is the near-duplicate — a fresh entry that says almost what
+> an existing one already says. When you find the entry that covers the ground, you
+> sharpen it instead of adding a rival. Everything you record lives in a repo file
+> the next session will load — never in tool or agent memory, which doesn't travel
+> in git. And you don't trust a claim until the file shows it: the files are the
+> memory; if a change isn't in them, it didn't happen. Any pass below can come up
+> empty — say so plainly and move on; never manufacture an entry to fill a section.
+>
+> Work through the session in this order.
+>
+> Start with what you learned. Take each learning and go find where it already
+> lives — the principles home (PRINCIPLES.md, or the Principles section of
+> CLAUDE.md), the constraints home (CONSTRAINTS.md, or the Constraints section of
+> CLAUDE.md), the decisions log (DECISIONS.md, if this repo keeps one), or wherever
+> this repo keeps such notes (e.g. a LEARNINGS file). Read what is already there
+> before you touch it. If an entry covers the ground, merge your learning in and
+> leave it sharper. Write a new entry only once you've looked and nothing fits.
+> While you're in each home, check whether a decision this session made has left an
+> earlier claim now false — if so, correct that claim in every current-state place
+> it appears (leave append-only logs alone). Note where each change went.
+>
+> Next, account for what went wrong. List what the session got wrong, redid, or
+> corrected. For each, check whether an existing rule or constraint already speaks
+> to it — if so, tighten that one; if not, write the fence that stops it recurring,
+> into a repo file. Prevent at the input what you'd otherwise keep catching at the
+> output. A failure you can't fence is the most important thing to surface.
+>
+> Next, reconcile the work. Check each task you closed against its full acceptance
+> criteria; if anything shipped short, capture the remainder as a narrower task
+> before removing the original. Write down any open item that won't resurface on its
+> own next session. File handoffs where the right party will find them — work a
+> human must action in TASKS/, finished human work in TASKS/DONE/.
+>
+> Next, look at the shape of the repo. Scan the git log (ignore routine auto-save
+> commits) for a theme worked hard across recent sessions worth promoting to a
+> permanent home, or a file untouched for many sessions worth retiring. Name one,
+> or say plainly there's nothing this time.
+>
+> Then close and prove it landed — this is the last step, in this order. Run `..cs`
+> to fossilise and commit. THEN open the committed files and confirm every change
+> from every pass above — including the close's own commit — is actually present,
+> and `git status` is clean; fix and re-commit anything that didn't land. If the
+> commit can't complete in this environment, say so plainly and name exactly what's
+> left uncommitted. If this repo runs a generated STATE.md or a capped
+> TASKS/PRIORITY/, check they're within limits and drain any overflow. A claim is
+> not done until the file shows it. State the safe-to-close verdict, verified by
+> command not memory — working tree clean, no stashes, and whether local `main` is
+> ahead of `origin`. Separate committed-and-pushed from committed-local-only (kept
+> on a normal close; lost only if this machine is wiped before a push) from anything
+> uncommitted. Do not push if this repo gates pushes or deploys behind a human —
+> report the unpushed state and let the human decide (offer a non-deploying backup
+> branch if useful). Then name anything that lived only in this conversation and was
+> deliberately not written to a file; offer to persist it in one line or let the
+> human release it — what isn't in a file won't survive the close.
 
 ---
 
@@ -1447,6 +1514,32 @@ When absorbing new information, **always check relevant files before updating:**
 - Don't dump information arbitrarily
 - Cross-reference related files
 - Maintain single source of truth per topic
+
+### Research Certainty Labels
+
+When reporting researched information — facts, figures, availability, deadlines, provider details — label the certainty:
+
+- **Confirmed** — verified against a primary or official source
+- **Likely** — based on recent secondary sources; worth verifying before acting on it
+- **Uncertain** — inferred, recalled, or AI-generated; verify independently before relying on it
+
+Do not present uncertain research as confirmed fact. On time-sensitive or high-stakes information, state how you verified it and flag anything that warrants a second check.
+
+**Case study:** Observed in production — an operate repo's AI presented researched information as confirmed fact without a certainty label; the human acted and the information was incorrect. The label would have prompted verification before action. **Level: protocol-level.**
+
+### Research Quality Standards
+
+When sourcing recommendations — products, services, providers, tools, figures — verify the claim against a primary or authoritative source before citing it. Review aggregators and secondary sites are starting points, not final sources. State your source and note explicitly when a figure or quality claim warrants independent verification.
+
+Do not present review-site summaries as authoritative values.
+
+**Case study:** Observed in production — an operate repo's AI cited a figure from a review aggregator as the actual value; the real value differed significantly. The source type was not surfaced. **Level: protocol-level.**
+
+### Surface Conflicts Before Drafting
+
+Before drafting output — a message, a plan, a spec — check whether context held in existing files conflicts with the task. Drafting past a visible conflict wastes cycles and erodes trust. Surface the conflict first, let the human resolve it, then draft.
+
+**Case study:** Observed in production — an operate repo accumulated repeated draft-then-rewrite cycles; root cause was existing context not checked before drafting began. The discipline emerged from the accumulated rework. **Level: protocol-level.**
 
 ### Deliverables Discipline (ea extension)
 
